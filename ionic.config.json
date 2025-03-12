@@ -1,0 +1,7 @@
+{
+  "name": "budget-buddy",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
