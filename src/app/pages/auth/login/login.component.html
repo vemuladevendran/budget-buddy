@@ -1,0 +1,55 @@
+<ion-content>
+  <div class="container h-100">
+    <div class="row p-0 h-100">
+      <div class="col-12 p-0">
+        <!-- back ground images -->
+        <div class="background-image-1"></div>
+        <div class="background-image-2"></div>
+
+        <!-- App text -->
+        <div class="text-center fs-2 fw-bold mt-5 app-text-secondary">
+          BUDGET BUDDY
+        </div>
+
+        <!-- login form -->
+        <div class="login-form-container px-2">
+          <h3 class="app-text-primary">Login</h3>
+          <!-- email -->
+          <div class="app-input">
+            <input type="email" name="email" placeholder="Email" />
+          </div>
+          <!-- password -->
+          <div class="app-input">
+            <input [type]="showPassword ? 'text' : 'password'" name="Password" placeholder="Password" />
+            <ion-icon [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" class="input-icon" (click)="toggelShowPassword()"></ion-icon>
+          </div>
+          <!-- login button -->
+          <div>
+            <button
+              type="submit"
+              class="btn w-100 app-bg-primary app-text-secondary fw-bold"
+            >
+              Login
+            </button>
+          </div>
+        </div>
+
+        <!-- or line -->
+        <div class="px-2 position-relative mt-4">
+          <hr class="app-text-secondary" />
+          <span class="or-text">OR</span>
+        </div>
+
+        <!-- login with google button -->
+        <div class="px-2">
+          <button
+            type="button"
+            class="btn w-100 app-bg-secondary fw-bold"
+          >
+            Tap to google login
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
