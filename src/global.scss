@@ -101,7 +101,18 @@ body {
 }
 
 .app-icon-text {
-    white-space: nowrap;        
-    overflow: hidden;           
+    white-space: nowrap;
+    overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.app-text-icon {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    > * {
+        font-size: 1.2rem;
+        margin: 0 .2rem;
+    }
+
 }

@@ -1,0 +1,65 @@
+<ion-content>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <!-- close icons -->
+        <div class="app-card">
+          <div class="row">
+            <div class="col-8 h4">Category</div>
+            <div class="col-4 d-flex justify-content-end">
+              <div class="app-text-icon" (click)="close()">
+                <ion-icon name="close-circle-outline"></ion-icon>
+                <span>close</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- content -->
+        <div class="app-card">
+          <ion-segment>
+            <ion-segment-button value="expenses" content-id="expenses">
+              <ion-label class="app-text-primary">Expenses</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="income" content-id="income">
+              <ion-label class="app-text-primary">Income</ion-label>
+            </ion-segment-button>
+          </ion-segment>
+          <ion-segment-view>
+            <ion-segment-content id="expenses">
+              <!-- expenses icons -->
+              <div class="row">
+                @for (c of categoryIcons; track $index) {
+                <div class="col-3 d-flex flex-column align-items-center my-3">
+                  <div class="app-icon">
+                    <img
+                      [src]="'/assets/app-icon/expenses-icon/' + c?.path"
+                      [alt]="c?.name"
+                    />
+                  </div>
+                  <span class="app-icon-text">{{ c?.name }}</span>
+                </div>
+                }
+              </div>
+            </ion-segment-content>
+            <ion-segment-content id="income">
+              <!-- income icons -->
+              <div class="row">
+                @for (i of incomeIcons; track $index) {
+                <div class="col-4 d-flex flex-column align-items-center my-3">
+                  <div class="app-icon">
+                    <img
+                      [src]="'/assets/app-icon/income-icon/' + i?.path"
+                      [alt]="i?.name"
+                    />
+                  </div>
+                  <span class="app-icon-text">{{ i?.name }}</span>
+                </div>
+                }
+              </div>
+            </ion-segment-content>
+          </ion-segment-view>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
