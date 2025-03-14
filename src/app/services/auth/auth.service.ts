@@ -23,11 +23,11 @@ export class AuthService {
     private platform: Platform
   ) {
     if (!isPlatform('capacitor')) {
-      GoogleAuth.init();
+      GoogleAuth.initialize();
     }
 
     this.platform.ready().then(() => {
-      GoogleAuth.init();
+      GoogleAuth.initialize();
     });
   }
 

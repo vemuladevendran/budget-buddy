@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ShellPage } from './shell.page';
 import { HomePage } from '../home/home.page';
+import { ProfilePage } from '../profile/profile.page';
 
 const routes: Routes = [
   { 
@@ -12,7 +13,7 @@ const routes: Routes = [
       { path: 'home', component: HomePage },
       // { path: 'expenses', loadChildren: () => import('../expenses/expenses.module').then(m => m.ExpensesPageModule) },
       // { path: 'accounts', loadChildren: () => import('../accounts/accounts.module').then(m => m.AccountsPageModule) },
-      // { path: 'profile', loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule) },
+      { path: 'profile', component: ProfilePage },
       { path: '', redirectTo: '/home', pathMatch: 'full' }
     ]
   }

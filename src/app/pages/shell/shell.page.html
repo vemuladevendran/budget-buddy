@@ -2,26 +2,48 @@
   <router-outlet></router-outlet>
 </ion-content>
 
-<ion-tabs>
-  <ion-tab-bar slot="bottom">
-    <ion-tab-button routerLink="/home" routerLinkActive="active">
-      <ion-icon name="home-outline"></ion-icon>
-      <ion-label>Home</ion-label>
-    </ion-tab-button>
+<!-- bottom nav bar -->
 
-    <ion-tab-button routerLink="/expenses" routerLinkActive="active">
-      <ion-icon name="wallet-outline"></ion-icon>
-      <ion-label>Expenses</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button routerLink="/accounts" routerLinkActive="active">
-      <ion-icon name="card-outline"></ion-icon>
-      <ion-label>Accounts</ion-label>
-    </ion-tab-button>
-
-    <ion-tab-button routerLink="/profile" routerLinkActive="active">
-      <ion-icon name="person-outline"></ion-icon>
-      <ion-label>Profile</ion-label>
-    </ion-tab-button>
-  </ion-tab-bar>
-</ion-tabs>
+<div class="bottom-tab-container position-relative">
+  <div class="row justify-content-between app-bg-secondary py-2">
+    <div
+      class="col text-center tab-item app-text-light fw-bold"
+      routerLink="/home"
+      routerLinkActive="active"
+    >
+      <ion-icon class="fs-2" name="home-outline"></ion-icon>
+      <p class="mb-0">Home</p>
+    </div>
+    <div
+      class="col text-center ta app-text-light fw-bold"
+      routerLink="/expenses"
+      routerLinkActive="active"
+    >
+      <ion-icon class="fs-2" name="wallet-outline"></ion-icon>
+      <p class="mb-0">Expenses</p>
+    </div>
+    <div class="col"></div>
+    <div
+      class="col text-center ta app-text-light fw-bold"
+      routerLink="/account"
+      routerLinkActive="active"
+    >
+      <ion-icon class="fs-2" name="card-outline"></ion-icon>
+      <p class="mb-0">Account</p>
+    </div>
+    <div
+      class="col text-center ta app-text-light fw-bold"
+      routerLink="/profile"
+      routerLinkActive="active"
+    >
+      <ion-icon class="fs-2" name="person-outline"></ion-icon>
+      <p class="mb-0">Me</p>
+    </div>
+  </div>
+  <div class="add-exp">
+    <ion-icon
+      class="app-text-secondary fw-bold"
+      name="add-circle-outline"
+    ></ion-icon>
+  </div>
+</div>

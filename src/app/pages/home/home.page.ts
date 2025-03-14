@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule]
+  imports: [IonicModule]
 })
 export class HomePage implements OnInit {
 

@@ -37,7 +37,7 @@
         <!-- or line -->
         <div class="px-2 position-relative mt-4">
           <hr class="app-text-secondary" />
-          <span class="or-text">OR</span>
+          <span class="or-text fw-bold app-text-success app-bg-light">OR</span>
         </div>
 
         <!-- login with google button -->
@@ -45,6 +45,7 @@
           <button
             type="button"
             class="btn w-100 app-bg-secondary fw-bold"
+            (click)="googleSign()"
           >
             Get In With Google
           </button>

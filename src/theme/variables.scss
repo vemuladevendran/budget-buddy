@@ -66,17 +66,23 @@
     --ion-color-medium-tint: #b2bccd;
     --ion-color-medium-low: rgba(160, 174, 192, 0.168);
 
-    --ion-color-dark: #2f4858;
+    --ion-color-dark: #2f485840;
     --ion-color-dark-rgb: 47, 72, 88;
     --ion-color-dark-contrast: #ffffff;
     --ion-color-dark-contrast-rgb: 255, 255, 255;
-    --ion-color-dark-shade: #293f4f;
+    --ion-color-dark-shade: #293f4faf;
     --ion-color-dark-tint: #3e5b6b;
     --ion-color-dark-low: rgba(47, 72, 88, 0.168);
+
+    ion-content {
+        --background: var(--ion-color-light) !important;
+    }
+    // system background colours
+    --background: var(--ion-color-light) !important;
 }
 
-
-body.dark-theme {
+body.dark-theme,
+body.dark-theme ion-content {
     --ion-color-primary: #5db3c1;
     --ion-color-primary-rgb: 93, 179, 193;
     --ion-color-primary-contrast: #ffffff;
@@ -139,6 +145,10 @@ body.dark-theme {
     --ion-color-dark-contrast-rgb: 255, 255, 255;
     --ion-color-dark-shade: #101010;
     --ion-color-dark-tint: #1a1a1a;
+
+    // system background colours
+    --background: var(--ion-color-light);
+    --color : var(--ion-color-primary)
 }
 
 // class with variables
@@ -146,6 +156,7 @@ body.dark-theme {
 .app-bg-primary {
     background-color: var(--ion-color-primary) !important;
 }
+
 .app-bg-secondary {
     background-color: var(--ion-color-secondary) !important;
 }
@@ -163,6 +174,10 @@ body.dark-theme {
 }
 .app-bg-light {
     background-color: var(--ion-color-light) !important;
+    color: var(--ion-color-secondary); /* Apply secondary color to the text */
+    & * {
+        color: var(--ion-color-secondary) !important; /* Apply secondary color to all nested elements */
+    }
 }
 .app-bg-medium {
     background-color: var(--ion-color-medium) !important;
@@ -200,41 +215,3 @@ body.dark-theme {
     color: var(--ion-color-dark) !important;
 }
 
-
-
-.app-input  {
-    padding: .3rem 0;
-    position: relative;
-    >input{
-        width: 100%;
-        border-radius: 6px;
-        border: 1px solid var(--ion-color-primary);
-        color: var(--ion-color-primary);
-        font-weight: bold;
-        height: 3rem;
-        padding: 0 10px;
-        outline: none;
-        transition: border 0.3s ease-in-out, background-color 0.3s;
-    }
-    >input:focus {
-        border: 1.5px solid var(--ion-color-success);
-        background-color: var(  --ion-color-success-low); 
-        color: var(--ion-color-success);
-    }
-
-    >input:disabled {
-        border: 1px solid var( --ion-color-medium);
-        background-color: var( --ion-color-medium-low);
-        color: #888;
-        cursor: not-allowed;
-    }
-
-    >.input-icon {
-        position: absolute;
-        top: 50%;
-        right: 1.3rem;
-        transform: translate(50%, -50%);
-        font-size: 1.3rem;
-        cursor: pointer;
-    }
-}
