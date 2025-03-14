@@ -1,5 +1,72 @@
-
-
 <ion-content [fullscreen]="true">
-  jskxnks
+  <div class="container">
+    <div class="row py-3 px-2">
+      <div class="col-12">
+        <!-- profile card -->
+        <div class="app-card">
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="app-icon">
+              <img src="/assets/app-icon/general/home.svg" />
+            </div>
+            <h3 class="ms-2">Devendran</h3>
+          </div>
+        </div>
+        <!-- expense cards -->
+        <div class="app-card">
+          <div class="row text-center align-items-center">
+            <div class="col border-end">
+              <p class="mb-1">Spent <span class="text-danger">↑</span></p>
+              <p class="mb-0">$43222</p>
+            </div>
+            <div class="col">
+              <p class="mb-1">Recived <span class="text-success">↓</span></p>
+              <p class="mb-0">$43222</p>
+            </div>
+          </div>
+        </div>
+        <!-- Commonly used  -->
+        <h3>Regularly Used</h3>
+
+        <div class="app-card">
+          <div class="row align-items-center justify-content-center">
+            @for (i of regularlyUsedIcons; track $index) {
+            <div class="col-4 d-flex flex-column align-items-center my-3">
+              <div class="app-icon">
+                <img
+                  [src]="'/assets/app-icon/general/' + i?.path"
+                  [alt]="i?.name"
+                />
+              </div>
+              <span class="app-icon-text">{{i?.name}}</span>
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- others -->
+        <h3>Others</h3>
+
+        <div class="app-card">
+          <div class="row align-items-center justify-content-center">
+            @for (o of otherIcons; track $index) {
+            <div class="col-4 d-flex flex-column align-items-center my-3">
+              <div class="app-icon">
+                <img
+                  [src]="'/assets/app-icon/general/' + o?.path"
+                  [alt]="o?.name"
+                />
+              </div>
+              <span class="app-icon-text">{{o?.name}}</span>
+            </div>
+            }
+          </div>
+        </div>
+
+        <!-- logout btn -->
+        <div class="my-4">
+          <button class="btn w-100 app-bg-secondary">Logout</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </ion-content>
