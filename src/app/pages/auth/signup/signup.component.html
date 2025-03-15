@@ -1,0 +1,73 @@
+<ion-content>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <img class="bg-2" src="/assets/vectors/bg-2.svg" />
+      </div>
+    </div>
+    <!-- signup form -->
+    <div class="row">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-8">
+            <div class="app-input">
+              <input type="text" name="name" placeholder="Full Name" />
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="app-input">
+              <select name="currency">
+                <option>Currency</option>
+                <option value="USD">USD</option>
+                <option value="INR">INR</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="app-input">
+          <input type="email" name="email" placeholder="Email" />
+        </div>
+        <!-- password -->
+        <div class="app-input">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            name="Password"
+            placeholder="Password"
+          />
+          <ion-icon
+            [name]="showPassword ? 'eye-outline' : 'eye-off-outline'"
+            class="input-icon"
+            (click)="toggelShowPassword()"
+          ></ion-icon>
+        </div>
+        <!-- login button -->
+        <div>
+          <button
+            type="submit"
+            class="btn w-100 app-bg-primary app-text-secondary fw-bold"
+          >
+            Sign Up
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- or line -->
+    <div class="px-2 position-relative mt-4">
+      <hr class="app-text-secondary" />
+      <span class="or-text fw-bold app-text-success app-bg-light">OR</span>
+    </div>
+
+    <!-- login with google button -->
+    <div class="px-2 mb-4">
+      <button
+        type="button"
+        class="btn w-100 app-bg-secondary fw-bold"
+        (click)="googleSign()"
+      >
+        Get In With Google
+      </button>
+    </div>
+  </div>
+</ion-content>

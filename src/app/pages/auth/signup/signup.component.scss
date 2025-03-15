@@ -1,0 +1,15 @@
+.bg-2 {
+    height: 41rem;
+    margin-top: -6rem;
+    margin-left: -7rem;
+    max-width: unset !important;
+}
+
+
+.or-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center it properly */
+    padding: 2px 8px;
+}

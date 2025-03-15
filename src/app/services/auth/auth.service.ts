@@ -33,14 +33,13 @@ export class AuthService {
 
   async googleSignIn() {
     this.userDetails = await GoogleAuth.signIn();
-
     return await this.userDetails;
   }
 
   // create user
 
-  userLogin(data: any) {
-    const url = `${this.settings.API_BASE_URL}/user/login`;
+  googleLogin(data: any) {
+    const url = `${this.settings.API_BASE_URL}/user/google-login`;
     return lastValueFrom(this.http.post(url, data));
   }
 

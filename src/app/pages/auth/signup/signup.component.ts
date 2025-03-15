@@ -1,21 +1,20 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Device } from '@capacitor/device';
 import { IonicModule } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { TokenService } from 'src/app/services/token/token.service';
-import { Device } from '@capacitor/device';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [IonicModule],
 })
-export class LoginComponent  {
+export class SignupComponent  {
   showPassword = false;
 
   userDetails: any;
@@ -31,11 +30,10 @@ export class LoginComponent  {
     this.showPassword = !this.showPassword;
   }
 
-  // google sign option
-
   async googleSign(): Promise<void> {
     try {
       this.userDetails = await this.authServe.googleSignIn();
+  
       const info = await Device.getInfo();
       const deviceId = await Device.getId();
 
@@ -52,10 +50,12 @@ export class LoginComponent  {
           },
         ],
       };
-      this.loaderServe.showLoading();
-      const res: any = await this.authServe.googleLogin(data);
-      this.tokenServe.saveToken(res?.token);
-      this.router.navigate(['home']);
+      console.log(this.userDetails, data,'----------');
+
+      // this.loaderServe.showLoading();
+      // const res: any = await this.authServe.googleLogin(data);
+      // this.tokenServe.saveToken(res?.token);
+      // this.router.navigate(['home']);
     } catch (error) {
       console.log(error);
       this.toastServe.presentToast('Fail to login')
@@ -63,5 +63,4 @@ export class LoginComponent  {
       this.loaderServe.hideLoading();
     }
   }
-
 }

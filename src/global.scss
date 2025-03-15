@@ -43,7 +43,8 @@ body {
 .app-input {
     padding: 0.3rem 0;
     position: relative;
-    > input {
+    > input,
+    select {
         width: 100%;
         border-radius: 6px;
         border: 1px solid var(--ion-color-primary);
@@ -112,7 +113,6 @@ body {
     cursor: pointer;
     > * {
         font-size: 1.2rem;
-        margin: 0 .2rem;
+        margin: 0 0.2rem;
     }
-
 }
