@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { IonContent, ModalController } from '@ionic/angular/standalone';  // Import ModalController from Ionic
 import { CategoryIconsComponent } from '../category-icons/category-icons.component';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -30,8 +31,12 @@ export class ProfilePage implements OnInit {
 
   // Inject ModalController using 'inject()'
   private modalCtrl = inject(ModalController);
+  private authCtrl = inject(AuthService)
 
-  constructor() {}
+
+  logout(): void {
+    this.authCtrl.logout()
+  }
 
   async openCategoryIconPage() {
     const modal = await this.modalCtrl.create({

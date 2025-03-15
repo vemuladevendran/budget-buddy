@@ -6,17 +6,17 @@
       </div>
     </div>
     <!-- signup form -->
-    <div class="row">
+    <form class="row" [formGroup]="signupForm" (ngSubmit)="createAccount()">
       <div class="col-12">
         <div class="row">
           <div class="col-8">
             <div class="app-input">
-              <input type="text" name="name" placeholder="Full Name" />
+              <input type="text" name="name" formControlName="name" placeholder="Full Name" />
             </div>
           </div>
           <div class="col-4">
             <div class="app-input">
-              <select name="currency">
+              <select name="currency" formControlName="default_currency">
                 <option>Currency</option>
                 <option value="USD">USD</option>
                 <option value="INR">INR</option>
@@ -26,7 +26,7 @@
         </div>
 
         <div class="app-input">
-          <input type="email" name="email" placeholder="Email" />
+          <input type="email" name="email" formControlName="email" placeholder="Email" />
         </div>
         <!-- password -->
         <div class="app-input">
@@ -34,6 +34,7 @@
             [type]="showPassword ? 'text' : 'password'"
             name="Password"
             placeholder="Password"
+            formControlName="password"
           />
           <ion-icon
             [name]="showPassword ? 'eye-outline' : 'eye-off-outline'"
@@ -44,15 +45,16 @@
         <!-- login button -->
         <div>
           <button
-            type="submit"
             class="btn w-100 app-bg-primary app-text-secondary fw-bold"
+            [disabled]="signupForm.invalid"
           >
             Sign Up
           </button>
         </div>
       </div>
-    </div>
+    </form>
 
+    <p class="mt-2 px-2">Already having account <a class="app-text-secondary fw-bold fs-5" routerLink="/login">Login</a></p>
     <!-- or line -->
     <div class="px-2 position-relative mt-4">
       <hr class="app-text-secondary" />

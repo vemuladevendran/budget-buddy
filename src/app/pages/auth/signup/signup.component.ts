@@ -1,5 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { Device } from '@capacitor/device';
 import { IonicModule } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth/auth.service';
@@ -12,11 +19,11 @@ import { TokenService } from 'src/app/services/token/token.service';
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
   standalone: true,
-  imports: [IonicModule],
+  imports: [IonicModule, RouterModule, ReactiveFormsModule,CommonModule],
 })
-export class SignupComponent  {
+export class SignupComponent {
   showPassword = false;
-
+  signupForm!: FormGroup;
   userDetails: any;
   constructor(
     private authServe: AuthService,
@@ -24,7 +31,16 @@ export class SignupComponent  {
     private tokenServe: TokenService,
     private loaderServe: LoaderService,
     private toastServe: ToastService,
-  ) {}
+    private fb: FormBuilder
+  ) {
+    this.signupForm = this.fb.group({
+      name: ['', [Validators.required]],
+      email: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
+      default_currency: ['', [Validators.required]],
+      authorization: ['app'],
+    });
+  }
 
   toggelShowPassword(): void {
     this.showPassword = !this.showPassword;
@@ -33,7 +49,7 @@ export class SignupComponent  {
   async googleSign(): Promise<void> {
     try {
       this.userDetails = await this.authServe.googleSignIn();
-  
+
       const info = await Device.getInfo();
       const deviceId = await Device.getId();
 
@@ -50,17 +66,51 @@ export class SignupComponent  {
           },
         ],
       };
-      console.log(this.userDetails, data,'----------');
-
-      // this.loaderServe.showLoading();
-      // const res: any = await this.authServe.googleLogin(data);
-      // this.tokenServe.saveToken(res?.token);
-      // this.router.navigate(['home']);
+      this.loaderServe.showLoading();
+      const res: any = await this.authServe.googleLogin(data);
+      this.tokenServe.saveToken(res?.token);
+      this.router.navigate(['home']);
     } catch (error) {
       console.log(error);
-      this.toastServe.presentToast('Fail to login')
-    }finally{
+      this.toastServe.presentToast('Fail to login');
+    } finally {
+      this.loaderServe.hideLoading();
+    }
+  }
+
+  // signup
+
+  async createAccount(): Promise<void> {
+    try {
+      if (!this.signupForm.valid) {
+        this.toastServe.presentToast('Fail to create account');
+        return
+      }
+      
+      const info = await Device.getInfo();
+      const deviceId = await Device.getId();
+      const data = {
+        ...this.signupForm.value,
+        loggedInDevices: [
+          {
+            platform: info.platform,
+            operatingSystem: info.operatingSystem,
+            deviceId: deviceId.identifier,
+          },
+        ],
+      };
+      
+      this.loaderServe.showLoading();
+      const res: any = await this.authServe.createUser(data);
+      this.tokenServe.saveToken(res?.token);
+      this.router.navigate(['home']);
+    } catch (error: any) {
+      console.log(error);
+      this.toastServe.presentToast(error?.error?.message);
+    } finally {
       this.loaderServe.hideLoading();
     }
   }
 }
+
+
