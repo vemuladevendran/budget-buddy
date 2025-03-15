@@ -11,6 +11,7 @@ import {
   ModalController,
 } from '@ionic/angular/standalone';
 import { IconService } from 'src/app/services/icon/icon.service';
+import { CalculateKeyboardComponent } from '../../common-components/calculate-keyboard/calculate-keyboard.component';
 
 @Component({
   selector: 'app-add-expenses',
@@ -25,7 +26,8 @@ import { IconService } from 'src/app/services/icon/icon.service';
     IonSegmentButton,
     IonSegmentContent,
     IonSegmentView,
-    CommonModule
+    CommonModule,
+    CalculateKeyboardComponent,
   ],
 })
 export class AddExpensesComponent implements OnInit {
@@ -36,15 +38,18 @@ export class AddExpensesComponent implements OnInit {
   incomeIcons: any = [];
 
   transaction_type = 'expense';
-  selectedCategory = ''
-
+  selectedCategory = '';
+  totalAmount = 0;
   close(): any {
     return this.modelCtrl.dismiss();
   }
 
-  checkActiveTab(e: any){
+  checkActiveTab(e: any) {
     this.transaction_type = e?.detail.value;
-    this.selectedCategory = this.transaction_type === 'expense' ? this.categoryIcons[0].name : this.incomeIcons[0].name
+    this.selectedCategory =
+      this.transaction_type === 'expense'
+        ? this.categoryIcons[0].name
+        : this.incomeIcons[0].name;
   }
 
   async getIcons(): Promise<void> {
@@ -57,8 +62,24 @@ export class AddExpensesComponent implements OnInit {
     }
   }
 
-  selectCategory(category: string){
+  selectCategory(category: string) {
     this.selectedCategory = category;
+  }
+
+  // on submit the expenses
+  async handleSubmit(e: any): Promise<void> {
+    try {
+      const data = {
+        transaction_type: this.transaction_type,
+        expense_type: this.selectedCategory,
+        ...e,
+      };
+
+      console.log(data, '========');
+      this.close()
+    } catch (error) {
+      console.log('Fail', error);
+    }
   }
 
   ngOnInit(): void {

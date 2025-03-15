@@ -1,0 +1,82 @@
+<ion-content>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="app-card">
+          <div class="app-card py-0">
+            <div class="row">
+              <div class="col-8">
+                <div class="app-input">
+                  <!-- Note input field, remains disabled for notes -->
+                  <input
+                    type="text"
+                    placeholder="✍️note"
+                    class="border-0"
+                    [formControl]="description"
+                  />
+                </div>
+              </div>
+              <div class="col-4 text-end">
+                <!-- Showing either calculation or totalAmount -->
+                <p class="mb-1">
+                  <span *ngIf="isCalculated">{{ totalAmount | currency: 'USD' }}</span>
+                  <span *ngIf="!isCalculated && !currentInput">{{ totalAmount | currency: 'USD' }}</span>
+                  <span *ngIf="!isCalculated && currentInput">{{ calculationResult }}</span>
+                </p>
+                <span class="text-decoration-underline">USD</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Keyboard -->
+          <div class="app-card">
+            <div class="row">
+              <div class="col-9">
+                <div class="row">
+                  <div class="col-4 p-1" *ngFor="let n of numbers">
+                    <div
+                      class="app-card m-0 px-0 py-1 fs-5 fw-bold text-center btn w-100 app-text-primary"
+                      (click)="addToInput(n)"
+                    >
+                      {{ n }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Operations -->
+              <div class="col-3">
+                <div class="row">
+                  <div class="col-12 p-1">
+                    <div
+                      class="app-card m-0 px-0 py-1 fs-5 fw-bold text-center btn w-100 app-text-primary"
+                      (click)="clearInput()"
+                    >
+                      ⌫
+                    </div>
+                  </div>
+                  <div class="col-6 p-1" *ngFor="let operator of operators">
+                    <div
+                      class="app-card m-0 px-0 py-1 fs-5 fw-bold text-center btn w-100 app-text-primary"
+                      (click)="addOperator(operator)"
+                    >
+                      {{ operator }}
+                    </div>
+                  </div>
+                  <div class="col-12 p-1">
+                    <div
+                      class="app-card m-0 px-0 py-1 fs-5 fw-bold text-center btn w-100 app-text-primary"
+                      (click)="isCalculated ? submit() : calculateResult()"
+                    >
+                      {{ isCalculated ? '✔️' : '=' }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

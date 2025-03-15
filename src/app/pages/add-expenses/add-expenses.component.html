@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content [fullscreen]="true">
   <div class="container">
     <div class="row">
       <div class="col-12">
@@ -17,7 +17,7 @@
 
         <!-- icons list -->
         <!-- content -->
-        <div class="app-card">
+        <div class="app-card category-container">
           <ion-segment
             class="app-bg-light"
             (ionChange)="checkActiveTab($event)"
@@ -71,6 +71,10 @@
               </div>
             </ion-segment-content>
           </ion-segment-view>
+        </div>
+        <!-- input and keypad card -->
+        <div class="cla-container">
+          <app-calculate-keyboard (expenseTotalData)="handleSubmit($event)"></app-calculate-keyboard>
         </div>
       </div>
     </div>
