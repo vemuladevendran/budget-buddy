@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { IonContent } from '@ionic/angular/standalone';
+import { IonContent,IonDatetime, IonDatetimeButton, IonModal } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-calculate-keyboard',
   templateUrl: './calculate-keyboard.component.html',
   styleUrls: ['./calculate-keyboard.component.scss'],
-  imports: [CommonModule, IonContent, ReactiveFormsModule],
+  imports: [CommonModule, IonContent, ReactiveFormsModule,IonDatetime, IonDatetimeButton, IonModal],
 })
 export class CalculateKeyboardComponent {
   noteInput: string = ''; // This holds the note input
@@ -19,8 +19,10 @@ export class CalculateKeyboardComponent {
   numbers: (number | string)[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, '.', 0]; // Number pad
   operators: string[] = ['+', '-', 'X', '÷']; // Operations
 
+  paymentType = new FormControl('')
   description = new FormControl('');
-
+  today: string = new Date().toISOString().slice(0, 10);
+  selectedDate: any = new Date();
   @Output() expenseTotalData = new EventEmitter<any>();
 
   // Method to add numbers to the current input for calculations
@@ -70,12 +72,18 @@ export class CalculateKeyboardComponent {
     }
   }
 
+  // on date change
+  onDateChange(event: any) {
+    this.selectedDate = new Date(event.target.value);
+  }
+
   // Method to log the totalAmount when the tick icon is clicked
   submit() {
     const data = {
       amount: this.totalAmount,
       description: this.description.value,
-      expense_date: new Date(),
+      expense_date: this.selectedDate,
+      payment_type: this.paymentType.value,
     };
     this.expenseTotalData.emit(data);
   }

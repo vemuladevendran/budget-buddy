@@ -1,0 +1,13 @@
+ion-datetime-button::part(native) {
+    background: transparent;
+    color: var(--ion-color-secondary);
+}
+
+ion-datetime {
+    --background: var(--ion-color-light);
+    color: var(--ion-color-secondary);
+}
+
+select {
+    background: var(--ion-color-dark);
+}

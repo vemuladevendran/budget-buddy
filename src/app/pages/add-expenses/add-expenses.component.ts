@@ -74,8 +74,6 @@ export class AddExpensesComponent implements OnInit {
         expense_type: this.selectedCategory,
         ...e,
       };
-
-      console.log(data, '========');
       this.close()
     } catch (error) {
       console.log('Fail', error);
