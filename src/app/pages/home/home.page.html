@@ -5,8 +5,58 @@
         <!-- top icons and month details -->
 
         <div class="row py-3">
-          <div class="col-4"></div>
-          <div class="col-4 text-center fw-bold fs-2">March</div>
+          <div class="col-2"></div>
+          <div class="col-6 text-center fw-bold fs-3">
+            <span id="year-dialog"
+              >{{monthList[currentMonth].name}} / {{currentYear}}</span
+            >
+            <ion-modal id="example-modal" trigger="year-dialog" (willDismiss)="onWillDismiss($event)">
+              <ng-template>
+                <div class="wrapper app-bg-dark app-text-primary p-2">
+                  <div class="row">
+                    <div class="text-center fs-4">
+                      <span class="fs-1 me-3 fw-bold" (click)="changeYear(1)"
+                        >&#8249;</span
+                      >
+                      {{selectedYear}}
+                      <span class="fs-1 ms-3 fw-bold" (click)="changeYear(0)"
+                        >&#8250;</span
+                      >
+                    </div>
+                    <div class="col mt-3 p-3">
+                      <div class="row">
+                        @for (m of monthList; track $index) {
+                        <div class="col-3 p-2">
+                          <div
+                            class="app-card app-text-primary text-center p-1 py-2 btn w-100"
+                            [ngClass]="{'border': (selectedMonth + 1) === m.month }"
+                            (click) = "changeMonth(m.month)"
+                          >
+                            {{m.month}}
+                          </div>
+                        </div>
+                        }
+                      </div>
+                    </div>
+
+                    <!-- close and submit icons -->
+                    <div class="col-12 d-flex justify-content-between">
+                      <ion-icon
+                        name="close-outline"
+                        class="fs-1 fw-bold m-3"
+                        (click)="submitYearMonth(false)"
+                      ></ion-icon>
+                      <ion-icon
+                        name="checkmark-outline"
+                        class="fs-1 fw-bold m-3"
+                        (click)="submitYearMonth(true)"
+                      ></ion-icon>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+            </ion-modal>
+          </div>
           <div class="col-4 text-end">
             <div class="d-flex h-100 align-items-center justify-content-end">
               <ion-icon name="search-outline" class="fs-2 mx-2"></ion-icon>
@@ -53,8 +103,6 @@
           <div class="text-center app-text-danger">No Bills Found</div>
           }
         </div>
-
-        
       </div>
     </div>
   </div>

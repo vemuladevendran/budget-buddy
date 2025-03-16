@@ -19,7 +19,7 @@ export class CalculateKeyboardComponent {
   numbers: (number | string)[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, '.', 0]; // Number pad
   operators: string[] = ['+', '-', 'X', '÷']; // Operations
 
-  paymentType = new FormControl('')
+  paymentType = new FormControl('Card')
   description = new FormControl('');
   today: string = new Date().toISOString().slice(0, 10);
   selectedDate: any = new Date();

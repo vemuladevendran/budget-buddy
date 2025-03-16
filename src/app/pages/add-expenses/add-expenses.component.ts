@@ -12,6 +12,7 @@ import {
 } from '@ionic/angular/standalone';
 import { IconService } from 'src/app/services/icon/icon.service';
 import { CalculateKeyboardComponent } from '../../common-components/calculate-keyboard/calculate-keyboard.component';
+import { ExpenseService } from 'src/app/services/expense/expense.service';
 
 @Component({
   selector: 'app-add-expenses',
@@ -33,6 +34,7 @@ import { CalculateKeyboardComponent } from '../../common-components/calculate-ke
 export class AddExpensesComponent implements OnInit {
   modelCtrl = inject(ModalController);
   iconsCtrl = inject(IconService);
+  expenseCtrl = inject(ExpenseService)
 
   categoryIcons: any = [];
   incomeIcons: any = [];
@@ -74,6 +76,7 @@ export class AddExpensesComponent implements OnInit {
         expense_type: this.selectedCategory,
         ...e,
       };
+      await this.expenseCtrl.createExpense(data);
       this.close()
     } catch (error) {
       console.log('Fail', error);
