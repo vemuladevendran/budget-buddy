@@ -21,8 +21,11 @@ export class CalculateKeyboardComponent {
 
   paymentType = new FormControl('Card')
   description = new FormControl('');
-  today: string = new Date().toISOString().slice(0, 10);
-  selectedDate: any = new Date();
+  
+  // Set today as a local date (yyyy-mm-dd format)
+  today: string = new Date().toLocaleDateString('en-CA');
+  selectedDate: any = new Date();  // Keep the selected date as the current local date
+
   @Output() expenseTotalData = new EventEmitter<any>();
 
   // Method to add numbers to the current input for calculations

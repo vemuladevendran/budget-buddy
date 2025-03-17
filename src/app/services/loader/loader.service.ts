@@ -5,20 +5,19 @@ import { LoadingController } from '@ionic/angular';
   providedIn: 'root',
 })
 export class LoaderService {
-
   constructor(private loadingCtrl: LoadingController) {}
 
   // Method to show the loader with an optional message
   async showLoading(message: string = 'Loading...') {
-      const loading = await this.loadingCtrl.create({
-        message: message,
-      });
+    const loading = await this.loadingCtrl.create({
+      message: message,
+    });
 
-      loading.present();
+    loading.present();
   }
 
   // Method to hide the loader
   async hideLoading() {
-   await this.loadingCtrl.dismiss();
-}
+    await this.loadingCtrl.dismiss();
+  }
 }

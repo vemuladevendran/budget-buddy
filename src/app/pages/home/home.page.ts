@@ -1,13 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonicModule, IonModal } from '@ionic/angular';
+import { ExpenseService } from 'src/app/services/expense/expense.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
+import { ExpensesListComponent } from "../../common-components/expenses-list/expenses-list.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule],
+  imports: [IonicModule, CommonModule, ExpensesListComponent],
 })
 export class HomePage implements OnInit {
   today: string = new Date().toISOString().slice(0, 10);
@@ -33,7 +36,12 @@ export class HomePage implements OnInit {
 
   @ViewChild(IonModal) modal!: IonModal;
 
-  constructor() {}
+  expenseList: any = [];
+
+  constructor(
+    private loaderCtrl: LoaderService,
+    private expenseCtrl: ExpenseService
+  ) {}
 
   changeYear(e: any) {
     if (e === 1) {
@@ -56,23 +64,46 @@ export class HomePage implements OnInit {
       this.submitType = true;
       this.currentMonth = this.selectedMonth;
       this.currentYear = this.selectedYear;
+      this.getExpenseList();
+
       this.modal.dismiss();
       return;
     } else {
       this.submitType = false;
       this.selectedMonth = this.currentMonth;
       this.selectedYear = this.currentYear;
+      this.getExpenseList();
+
       this.modal.dismiss();
     }
   }
 
   onWillDismiss(event: any) {
-    if(!this.submitType){
+    if (!this.submitType) {
       this.selectedMonth = this.currentMonth;
       this.selectedYear = this.currentYear;
     }
-    console.log(event);
+    return;
   }
 
-  ngOnInit() {}
+  async getExpenseList(): Promise<void> {
+    try {
+      const filters = {
+        year: this.selectedYear,
+        month: this.selectedMonth + 1,
+      };
+      // this.loaderCtrl.showLoading();
+      const data = await this.expenseCtrl.getExpense(filters);
+      this.expenseList = data;
+      console.log(data, '========!');
+    } catch (error) {
+      console.log(error, 'Fail to fetch');
+    } finally {
+      this.loaderCtrl.hideLoading();
+    }
+  }
+
+  ngOnInit() {
+    this.getExpenseList();
+  }
 }

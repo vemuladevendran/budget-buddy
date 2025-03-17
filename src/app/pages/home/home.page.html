@@ -10,7 +10,11 @@
             <span id="year-dialog"
               >{{monthList[currentMonth].name}} / {{currentYear}}</span
             >
-            <ion-modal id="example-modal" trigger="year-dialog" (willDismiss)="onWillDismiss($event)">
+            <ion-modal
+              id="example-modal"
+              trigger="year-dialog"
+              (willDismiss)="onWillDismiss($event)"
+            >
               <ng-template>
                 <div class="wrapper app-bg-dark app-text-primary p-2">
                   <div class="row">
@@ -30,7 +34,7 @@
                           <div
                             class="app-card app-text-primary text-center p-1 py-2 btn w-100"
                             [ngClass]="{'border': (selectedMonth + 1) === m.month }"
-                            (click) = "changeMonth(m.month)"
+                            (click)="changeMonth(m.month)"
                           >
                             {{m.month}}
                           </div>
@@ -88,20 +92,10 @@
 
         <!-- recent bill on the month -->
         <div class="row py-3 px-2">
-          <h3>Recent Bill On The Month</h3>
+          <h3>Bill On The Month</h3>
           <hr />
           <!-- everyday bills -->
-          @for (b of []; track $index) {
-          <div>
-            <div class="d-flex justify-content-between align-items-center">
-              <h4>Today Mar 13</h4>
-              <span>383</span>
-            </div>
-            <div class="app-card"></div>
-          </div>
-          }@empty {
-          <div class="text-center app-text-danger">No Bills Found</div>
-          }
+          <app-expenses-list class="p-0" [expenseList]="expenseList"></app-expenses-list>
         </div>
       </div>
     </div>

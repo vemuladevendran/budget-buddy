@@ -13,6 +13,7 @@ import {
 import { IconService } from 'src/app/services/icon/icon.service';
 import { CalculateKeyboardComponent } from '../../common-components/calculate-keyboard/calculate-keyboard.component';
 import { ExpenseService } from 'src/app/services/expense/expense.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
   selector: 'app-add-expenses',
@@ -34,7 +35,8 @@ import { ExpenseService } from 'src/app/services/expense/expense.service';
 export class AddExpensesComponent implements OnInit {
   modelCtrl = inject(ModalController);
   iconsCtrl = inject(IconService);
-  expenseCtrl = inject(ExpenseService)
+  expenseCtrl = inject(ExpenseService);
+  loaderCtrl = inject(LoaderService)
 
   categoryIcons: any = [];
   incomeIcons: any = [];
@@ -76,10 +78,15 @@ export class AddExpensesComponent implements OnInit {
         expense_type: this.selectedCategory,
         ...e,
       };
+      console.log(data);
+      
+      this.loaderCtrl.showLoading()
       await this.expenseCtrl.createExpense(data);
       this.close()
     } catch (error) {
       console.log('Fail', error);
+    }finally{
+      this.loaderCtrl.hideLoading()
     }
   }
 

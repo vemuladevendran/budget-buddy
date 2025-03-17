@@ -1,0 +1,38 @@
+<div class="app-card">
+  @for (e of expenseList; track $index) {
+  <div class="row align-items-center">
+    <div class="col-3">
+      <div class="fw-bold">
+        {{ e?.expense_date | date:'MM/dd' }}
+      </div>
+      <div class="app-icon">
+        <img
+          [src]="'/assets/app-icon/' + (e?.transaction_type === 'expense' ? 'expenses-icon/' : 'income-icon/') + e?.expense_type + '.svg'"
+          [alt]="e?.expense_type"
+        />
+      </div>
+     
+    </div>
+    <div class="col-5">
+      <p class="mb-0 text-capitalize fs-5">{{e?.expense_type}}</p>
+      <span class="description">{{e?.description}}</span>
+    </div>
+    <div class="col-4 text-end">
+      <div>
+        <span>{{e?.transaction_type === 'expense' ? '-' : '+'}}</span>
+        {{e?.amount | currency: e?.currency_code}}
+        <span
+          [ngClass]="e?.transaction_type === 'expense' ? 'text-danger' : 'text-success'"
+          >{{e?.transaction_type === 'expense' ? '↑' : '↓'}}</span
+        >
+      </div>
+      <div class="fw-bold">
+        {{ e?.expense_date | date:'hh:mm a' }}
+      </div>
+    </div>
+  </div>
+  <hr />
+  }@empty {
+  <div class="text-center app-text-danger">No Bills Found</div>
+  }
+</div>
