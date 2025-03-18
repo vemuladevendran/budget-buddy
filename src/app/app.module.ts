@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { AuthInterceptorService } from './services/auth/auth-interceptor.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -17,6 +18,12 @@ import { AuthInterceptorService } from './services/auth/auth-interceptor.service
     AppRoutingModule,
     HttpClientModule,
     IonicStorageModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
