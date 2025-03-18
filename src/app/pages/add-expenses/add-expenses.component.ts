@@ -44,8 +44,11 @@ export class AddExpensesComponent implements OnInit {
   transaction_type = 'expense';
   selectedCategory = '';
   totalAmount = 0;
-  close(): any {
-    return this.modelCtrl.dismiss();
+
+  close(status: Boolean): any {
+    return this.modelCtrl.dismiss({
+      expenseCreated: status,
+    });
   }
 
   checkActiveTab(e: any) {
@@ -82,7 +85,7 @@ export class AddExpensesComponent implements OnInit {
       
       this.loaderCtrl.showLoading()
       await this.expenseCtrl.createExpense(data);
-      this.close()
+      this.close(true)
     } catch (error) {
       console.log('Fail', error);
     }finally{

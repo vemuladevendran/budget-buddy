@@ -3,7 +3,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonicModule, IonModal } from '@ionic/angular';
 import { ExpenseService } from 'src/app/services/expense/expense.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
-import { ExpensesListComponent } from "../../common-components/expenses-list/expenses-list.component";
+import { ExpensesListComponent } from '../../common-components/expenses-list/expenses-list.component';
+import { SharedService } from 'src/app/services/shared/shared.service';
 
 @Component({
   selector: 'app-home',
@@ -40,8 +41,15 @@ export class HomePage implements OnInit {
 
   constructor(
     private loaderCtrl: LoaderService,
-    private expenseCtrl: ExpenseService
-  ) {}
+    private expenseCtrl: ExpenseService,
+    private sharedCtrl: SharedService
+  ) {
+    this.sharedCtrl.addExpenseModalClosed$.subscribe((data) => {
+      if (data) {
+        this.getExpenseList();
+      }
+    });
+  }
 
   changeYear(e: any) {
     if (e === 1) {

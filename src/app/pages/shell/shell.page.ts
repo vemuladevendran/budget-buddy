@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
 import { AddExpensesComponent } from '../add-expenses/add-expenses.component';
+import { SharedService } from 'src/app/services/shared/shared.service';
 
 @Component({
   selector: 'app-shell',
@@ -14,6 +15,7 @@ import { AddExpensesComponent } from '../add-expenses/add-expenses.component';
 })
 export class ShellPage implements OnInit {
   private modalCtrl = inject(ModalController);
+  private sharedCtrl = inject(SharedService)
   constructor() {}
 
   async openAddExpensesPage() {
@@ -21,6 +23,14 @@ export class ShellPage implements OnInit {
       component: AddExpensesComponent,
     });
     modal.present();
+
+    const result = await modal.onWillDismiss();
+
+    if(result?.data?.expenseCreated){
+        this.sharedCtrl.notifyAddExpenseModalClosed(result?.data)
+    }
+
+    
   }
 
   ngOnInit() {}
