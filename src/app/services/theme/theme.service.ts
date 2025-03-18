@@ -62,8 +62,9 @@ export class ThemeService {
 
   // This is the method where you can pass a theme value
   // Directly set a theme (dark, light, or system) based on user selection
-  async setTheme(theme: 'dark' | 'light' | 'system') {
-    await this.setThemes(theme); // Apply the selected theme
+  async setInitialTheme() {
+    const themePreference = await this.getThemes(); // Get theme preference
+    await this.setThemes(themePreference); // Apply the selected theme
   }
 
   // Set theme as system (default system preference)

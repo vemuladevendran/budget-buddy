@@ -1,0 +1,13 @@
+ion-radio-group {
+    --background: "transperent";
+    color: var(--ion-color-secondary);
+    > * {
+        --background: "transperent";
+        color: var(--ion-color-secondary);
+    }
+}
+
+
+.sample-img {
+    height: 380px;
+}

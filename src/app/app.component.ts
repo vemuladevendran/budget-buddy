@@ -10,7 +10,16 @@ import { ThemeService } from './services/theme/theme.service';
 export class AppComponent {
   constructor(private renderer: Renderer2, private themeCtrl: ThemeService) {}
 
+
+  async applyInitialTheme(): Promise<void>{
+    try {
+      await this.themeCtrl.setInitialTheme();
+    } catch (error) {
+      console.log("Fail to apply themes");
+    }
+  }
+
   ngOnInit() {
-    this.themeCtrl.setThemes();
+    
   }
 }

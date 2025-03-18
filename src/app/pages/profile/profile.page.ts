@@ -4,6 +4,7 @@ import { CategoryIconsComponent } from '../category-icons/category-icons.compone
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CommonModule } from '@angular/common';
+import { SelectThemeComponent } from '../select-theme/select-theme.component';
 
 @Component({
   selector: 'app-profile',
@@ -49,6 +50,13 @@ export class ProfilePage implements OnInit {
     modal.present();
   }
 
+  async openThemesPage(){
+    const modal = await this.modalCtrl.create({
+      component: SelectThemeComponent,
+    });
+    modal.present();
+  }
+
   handleIconClick(action: any) {
     switch (action) {
       case 'openCategory':
@@ -65,6 +73,7 @@ export class ProfilePage implements OnInit {
       case 'openTag':
         break;
       case 'openThemes':
+        this.openThemesPage();
         break;
       case 'syncData':
         break;
@@ -87,6 +96,8 @@ export class ProfilePage implements OnInit {
       console.log(error, 'Fail to get user data');
     }
   }
+
+ 
 
   ngOnInit() {
     this.getUserSummaryData();
