@@ -14,6 +14,8 @@ import { IconService } from 'src/app/services/icon/icon.service';
 import { CalculateKeyboardComponent } from '../../common-components/calculate-keyboard/calculate-keyboard.component';
 import { ExpenseService } from 'src/app/services/expense/expense.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { TokenService } from 'src/app/services/token/token.service';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-add-expenses',
@@ -36,7 +38,9 @@ export class AddExpensesComponent implements OnInit {
   modelCtrl = inject(ModalController);
   iconsCtrl = inject(IconService);
   expenseCtrl = inject(ExpenseService);
-  loaderCtrl = inject(LoaderService)
+  loaderCtrl = inject(LoaderService);
+  tokenServe = inject(TokenService);
+  authServe = inject(AuthService);
 
   categoryIcons: any = [];
   incomeIcons: any = [];
@@ -81,15 +85,24 @@ export class AddExpensesComponent implements OnInit {
         expense_type: this.selectedCategory,
         ...e,
       };
-      console.log(data);
-      
-      this.loaderCtrl.showLoading()
+      this.loaderCtrl.showLoading();
       await this.expenseCtrl.createExpense(data);
-      this.close(true)
+      await this.getUserSummary();
+      this.close(true);
     } catch (error) {
       console.log('Fail', error);
-    }finally{
-      this.loaderCtrl.hideLoading()
+    } finally {
+      this.loaderCtrl.hideLoading();
+    }
+  }
+
+  // get user summary
+  async getUserSummary(): Promise<void> {
+    try {
+      const data = await this.authServe.getUserSummary();
+      this.tokenServe.saveUserSummary(data);
+    } catch (error) {
+      console.log(error, 'Fail to get user summary');
     }
   }
 

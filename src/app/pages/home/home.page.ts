@@ -5,6 +5,7 @@ import { ExpenseService } from 'src/app/services/expense/expense.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ExpensesListComponent } from '../../common-components/expenses-list/expenses-list.component';
 import { SharedService } from 'src/app/services/shared/shared.service';
+import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
   selector: 'app-home',
@@ -38,11 +39,12 @@ export class HomePage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
 
   expenseList: any = [];
-
+  userSummaryData: any;
   constructor(
     private loaderCtrl: LoaderService,
     private expenseCtrl: ExpenseService,
-    private sharedCtrl: SharedService
+    private sharedCtrl: SharedService,
+    private tokenCtrl: TokenService
   ) {
     this.sharedCtrl.addExpenseModalClosed$.subscribe((data) => {
       if (data) {
@@ -103,11 +105,20 @@ export class HomePage implements OnInit {
       // this.loaderCtrl.showLoading();
       const data = await this.expenseCtrl.getExpense(filters);
       this.expenseList = data;
-      console.log(data, '========!');
+      this.getUserSummaryData();
     } catch (error) {
       console.log(error, 'Fail to fetch');
     } finally {
       this.loaderCtrl.hideLoading();
+    }
+  }
+
+  async getUserSummaryData(): Promise<void> {
+    try {
+      const data = await this.tokenCtrl.getUserSummary();
+      this.userSummaryData = data;
+    } catch (error) {
+      console.log(error, 'Fail to get user data');
     }
   }
 

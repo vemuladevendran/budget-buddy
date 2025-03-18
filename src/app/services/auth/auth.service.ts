@@ -48,6 +48,12 @@ export class AuthService {
     return lastValueFrom(this.http.post(url, data));
   }
 
+  // get user summary
+  getUserSummary(){
+    const url =`${this.settings.API_BASE_URL}/user/userSummary`;
+    return lastValueFrom(this.http.get(url));
+  }
+
   isLoggedIn() {
     return this.token.isTokenExist();
   }

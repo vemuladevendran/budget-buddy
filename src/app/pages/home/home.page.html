@@ -71,17 +71,35 @@
 
         <!-- expense details card -->
         <div class="row text-center align-items-center app-card">
-          <div class="col-4 border-end">
-            <p class="mb-1">Spent <span class="text-danger">↑</span></p>
-            <p class="mb-0">$43222</p>
+          <div class="col-6 py-2 border-end border-bottom">
+            <p class="mb-1">Total Spent <span class="text-danger">↑</span></p>
+            <p class="mb-0">
+              {{userSummaryData?.total_expense | currency:
+              userSummaryData?.default_currency}}
+            </p>
           </div>
-          <div class="col-4 border-end">
-            <p class="mb-1">Recived <span class="text-success">↓</span></p>
-            <p class="mb-0">$43222</p>
+          <div class="col-6 py-2 border-bottom">
+            <p class="mb-1">
+              Total Recived <span class="text-success">↓</span>
+            </p>
+            <p class="mb-0">
+              {{userSummaryData?.total_income | currency:
+              userSummaryData?.default_currency}}
+            </p>
           </div>
-          <div class="col-4">
-            <p class="mb-1">Balance</p>
-            <p class="mb-0">$43222</p>
+          <div class="col-6 py-2 border-end">
+            <p class="mb-1">Total Balance</p>
+            <p class="mb-0">
+              {{userSummaryData?.total_balance | currency:
+              userSummaryData?.default_currency}}
+            </p>
+          </div>
+          <div class="col-6 py-2">
+            <p class="mb-1">Total Records</p>
+            <p class="mb-0">
+              {{userSummaryData?.total_budget_expenses | currency:
+              userSummaryData?.default_currency}}
+            </p>
           </div>
           <div class="my-3 border-top"></div>
           <div class="col-10">Let set the budget and reduce the spending</div>
@@ -95,7 +113,10 @@
           <h3>Bill On The Month</h3>
           <hr />
           <!-- everyday bills -->
-          <app-expenses-list class="p-0" [expenseList]="expenseList"></app-expenses-list>
+          <app-expenses-list
+            class="p-0"
+            [expenseList]="expenseList"
+          ></app-expenses-list>
         </div>
       </div>
     </div>

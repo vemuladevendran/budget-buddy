@@ -68,7 +68,8 @@ export class SignupComponent {
       };
       this.loaderServe.showLoading();
       const res: any = await this.authServe.googleLogin(data);
-      this.tokenServe.saveToken(res?.token);
+      await this.tokenServe.saveToken(res?.token);
+      await this.getUserSummary();
       this.router.navigate(['home']);
     } catch (error) {
       console.log(error);
@@ -102,13 +103,24 @@ export class SignupComponent {
       
       this.loaderServe.showLoading();
       const res: any = await this.authServe.createUser(data);
-      this.tokenServe.saveToken(res?.token);
+      await this.tokenServe.saveToken(res?.token);
+      await this.getUserSummary();
       this.router.navigate(['home']);
     } catch (error: any) {
       console.log(error);
       this.toastServe.presentToast(error?.error?.message);
     } finally {
       this.loaderServe.hideLoading();
+    }
+  }
+
+  // get user summary
+  async getUserSummary(): Promise<void>{
+    try {
+      const data = await this.authServe.getUserSummary();
+      this.tokenServe.saveUserSummary(data);
+    } catch (error) {
+      console.log(error, 'Fail to get user summary');
     }
   }
 }

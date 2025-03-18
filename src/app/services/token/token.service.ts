@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage-angular';
 })
 export class TokenService {
   private tokenKey = 'AUTH_TOKEN';
+  private summaryKey = 'SUMMARY_TOKEN';
 
   constructor(private storage: Storage) {
     this.init();
@@ -21,12 +22,12 @@ export class TokenService {
       await this.storage.set(this.tokenKey, data);
     } catch (error) {
       console.log('fail to save data');
-    }  }
+    }
+  }
 
   async getToken(): Promise<string | null> {
     const data = await this.storage.get(this.tokenKey);
-    return data
-    
+    return data;
   }
 
   async isTokenExist(): Promise<boolean> {
@@ -48,5 +49,19 @@ export class TokenService {
     } catch (error) {
       return null;
     }
+  }
+
+  async saveUserSummary(data: any) {
+    try {
+      await this.storage.remove(this.summaryKey);
+      await this.storage.set(this.summaryKey, data);
+    } catch (error) {
+      console.log('Fail to save user summary');
+    }
+  }
+
+  async getUserSummary(): Promise<string | null> {
+    const data = await this.storage.get(this.summaryKey);
+    return data;
   }
 }
