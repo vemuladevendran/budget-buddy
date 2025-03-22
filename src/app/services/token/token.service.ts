@@ -19,6 +19,7 @@ export class TokenService {
 
   async saveToken(data: any) {
     try {
+      
       await this.storage.set(this.tokenKey, data);
     } catch (error) {
       console.log('fail to save data');

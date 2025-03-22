@@ -27,19 +27,25 @@
           <ion-segment-view>
             <ion-segment-content id="expenses">
               <!-- expenses icons -->
-              <div class="row">
+              <ion-reorder-group
+                class="row"
+                [disabled]="false"
+                (ionItemReorder)="handleReorder($any($event))"
+              >
                 @for (c of categoryIcons; track $index) {
-                <div class="col-3 d-flex flex-column align-items-center my-3">
-                  <div class="app-icon">
-                    <img
-                      [src]="'/assets/app-icon/expenses-icon/' + c?.path"
-                      [alt]="c?.name"
-                    />
+                <ion-reorder class="col-3">
+                  <div class="d-flex flex-column align-items-center my-3">
+                    <div class="app-icon">
+                      <img
+                        [src]="'/assets/app-icon/expenses-icon/' + c?.path"
+                        [alt]="c?.name"
+                      />
+                    </div>
+                    <span class="app-icon-text">{{ c?.name }}</span>
                   </div>
-                  <span class="app-icon-text">{{ c?.name }}</span>
-                </div>
+                </ion-reorder>
                 }
-              </div>
+              </ion-reorder-group>
             </ion-segment-content>
             <ion-segment-content id="income">
               <!-- income icons -->

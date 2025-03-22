@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">budget-buddy</string>
+    <string name="title_activity_main">budget-buddy</string>
+    <string name="package_name">io.aplan.mymoney</string>
+    <string name="custom_url_scheme">io.aplan.mymoney</string>
+    <string name="server_client_id">585745388517-bmf5odf1pcegje7nv0p9otug0dmck39m.apps.googleusercontent.com</string>
+
+</resources>

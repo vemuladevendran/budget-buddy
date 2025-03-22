@@ -1,4 +1,6 @@
 import { CommonModule } from '@angular/common';
+import { ViewChild } from '@angular/core';
+import { ElementRef } from '@angular/core';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { IonContent,IonDatetime, IonDatetimeButton, IonModal } from '@ionic/angular/standalone';
@@ -19,12 +21,13 @@ export class CalculateKeyboardComponent {
   numbers: (number | string)[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, '.', 0]; // Number pad
   operators: string[] = ['+', '-', 'X', '÷']; // Operations
 
+  dateopen = false
   paymentType = new FormControl('Card')
   description = new FormControl('');
   
   // Set today as a local date (yyyy-mm-dd format)
   today: string = new Date().toLocaleDateString('en-CA');
-  selectedDate: any = new Date();  // Keep the selected date as the current local date
+  selectedDate: any = new Date().toLocaleDateString('en-CA');  // Keep the selected date as the current local date
 
   @Output() expenseTotalData = new EventEmitter<any>();
 
@@ -73,6 +76,10 @@ export class CalculateKeyboardComponent {
         this.isCalculated = false;
       }
     }
+  }
+
+  getCurrentDate() {
+    return new Date().toLocaleDateString('en-CA'); // Get today's date in YYYY-MM-DD format
   }
 
   // on date change

@@ -1,7 +1,7 @@
 {
-  "name": "app",
-  "short_name": "app",
-  "theme_color": "#1976d2",
+  "name": "Budget Buddy",
+  "short_name": "Budget",
+  "theme_color": "#5db3c1",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",

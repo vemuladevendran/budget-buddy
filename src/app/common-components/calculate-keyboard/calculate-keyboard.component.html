@@ -5,7 +5,11 @@
         <div class="app-card pt-0">
           <div class="d-flex">
             <div class="app-input p-0">
-              <select name="Payment" class="w-auto h-100 border-0" [formControl]="paymentType">
+              <select
+                name="Payment"
+                class="w-auto h-100 border-0"
+                [formControl]="paymentType"
+              >
                 <option value="Card" selected>Card</option>
                 <option value="Cash">Cash</option>
                 <option value="UPI">UPI</option>
@@ -63,12 +67,26 @@
                   <div class="col-4 p-1">
                     <div
                       class="app-card m-0 px-0 py-1 fs-5 fw-bold text-center btn w-100 app-text-primary"
+                      *ngIf="selectedDate === getCurrentDate()"
+                      (click)="dateopen = true"
+                    >
+                      Today
+                    </div>
+                    <div
+                      [ngClass]="
+                        selectedDate === getCurrentDate()
+                          ? 'd-none'
+                          : 'app-card m-0 px-0 py-1 fs-5 fw-bold text-center btn w-100 app-text-primary'
+                      "
                     >
                       <ion-datetime-button
                         datetime="datetime"
                       ></ion-datetime-button>
 
-                      <ion-modal [keepContentsMounted]="true">
+                      <ion-modal
+                        [keepContentsMounted]="true"
+                        [isOpen]="dateopen"
+                      >
                         <ng-template>
                           <ion-datetime
                             max="{{ today }}"

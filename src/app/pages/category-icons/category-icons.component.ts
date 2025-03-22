@@ -8,6 +8,8 @@ import {
   IonSegmentButton,
   IonSegmentContent,
   IonSegmentView,
+  IonReorder,
+  IonReorderGroup,
 } from '@ionic/angular/standalone';
 import { IconService } from 'src/app/services/icon/icon.service';
 
@@ -24,6 +26,8 @@ import { IconService } from 'src/app/services/icon/icon.service';
     IonSegmentButton,
     IonSegmentContent,
     IonSegmentView,
+    IonReorder,
+    IonReorderGroup,
   ],
 })
 export class CategoryIconsComponent implements OnInit {
@@ -44,6 +48,10 @@ export class CategoryIconsComponent implements OnInit {
     } catch (error) {
       console.log('Fail to get Icons');
     }
+  }
+
+  handleReorder(event: any) {
+    event.detail.complete();
   }
 
   ngOnInit(): void {
