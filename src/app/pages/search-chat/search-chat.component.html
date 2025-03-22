@@ -1,0 +1,72 @@
+<ion-content>
+  <div class="container">
+    <div class="row">
+      <div
+        class="col-12 position-sticky start-0 w-100 bg-dark"
+        style="top: -10%"
+      >
+        <div class="app-card" style="font-size: 13px">
+          Chat with system to get your expense details
+          <hr />
+          Use keywords like : Total expense, Highest expenses, this month
+          expense, last month expense, or expenses on particular category
+        </div>
+        <hr />
+      </div>
+
+      <!-- chats  -->
+      <div class="col-12 chat-container" #chatContainer>
+        @for (c of chatData; track $index) {
+        <div class="row">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-9 app-card">{{ c?.query }}</div>
+            </div>
+          </div>
+          <div class="col-12 text-end">
+            <div class="row justify-content-end">
+              <div class="col-12 app-card bill-card">
+                <p *ngIf="c?.result?.message">{{ c?.result?.message }}</p>
+                <p *ngIf="c?.result?.totalExpense">
+                  Total Expenses :
+                  {{
+                    c?.result?.totalExpense
+                      | currency : userSummaryData?.default_currency
+                  }}
+                </p>
+
+                <!-- list -->
+                <div>
+                  <app-expenses-list
+                    class="p-0"
+                    [expenseList]="c?.result?.records"
+                  ></app-expenses-list>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+
+      <!-- chat input -->
+      <div
+        class="col-12 chat-input-container bg-dark position-fixed start-0 w-100 px-0"
+      >
+        <div class="app-input">
+          <input
+            type="text"
+            name="query"
+            placeholder="Get my total expense"
+            [formControl]="queryText"
+          />
+          <ion-icon
+            name="send-outline"
+            class="input-icon"
+            (click)="queryExpenseData()"
+          ></ion-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

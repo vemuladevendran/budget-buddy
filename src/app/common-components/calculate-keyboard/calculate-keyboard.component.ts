@@ -3,13 +3,23 @@ import { ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import { IonContent,IonDatetime, IonDatetimeButton, IonModal } from '@ionic/angular/standalone';
+import {
+  IonDatetime,
+  IonDatetimeButton,
+  IonModal,
+} from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-calculate-keyboard',
   templateUrl: './calculate-keyboard.component.html',
   styleUrls: ['./calculate-keyboard.component.scss'],
-  imports: [CommonModule, IonContent, ReactiveFormsModule,IonDatetime, IonDatetimeButton, IonModal],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    IonDatetime,
+    IonDatetimeButton,
+    IonModal,
+  ],
 })
 export class CalculateKeyboardComponent {
   noteInput: string = ''; // This holds the note input
@@ -21,16 +31,17 @@ export class CalculateKeyboardComponent {
   numbers: (number | string)[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, '.', 0]; // Number pad
   operators: string[] = ['+', '-', 'X', '÷']; // Operations
 
-  dateopen = false
-  paymentType = new FormControl('Card')
+  dateopen = false;
+  paymentType = new FormControl('Card');
   description = new FormControl('');
-  
+
   // Set today as a local date (yyyy-mm-dd format)
   today: any = new Date();
-  selectedDate: any = new Date().toDateString;  // Keep the selected date as the current local date
+  selectedDate: any = new Date().toDateString; // Keep the selected date as the current local date
 
   @Output() expenseTotalData = new EventEmitter<any>();
-
+  @ViewChild('descriptionInput') descriptionInput!: ElementRef;
+  isDescriptionInputIsFocus: Boolean = false;
   // Method to add numbers to the current input for calculations
   addToInput(number: number | string) {
     if (this.isCalculated) {
@@ -96,5 +107,13 @@ export class CalculateKeyboardComponent {
       payment_type: this.paymentType.value,
     };
     this.expenseTotalData.emit(data);
+  }
+
+  setDescriptionInputFocus(value: Boolean) {
+    this.isDescriptionInputIsFocus = value;
+  }
+
+  closeKeypad() {
+    this.descriptionInput.nativeElement.blur();
   }
 }

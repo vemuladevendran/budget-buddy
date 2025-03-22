@@ -1,7 +1,6 @@
-<ion-content>
   <div class="container">
     <div class="row">
-      <div class="col-12">
+      <div class="col-12 p-0">
         <div class="app-card pt-0">
           <div class="d-flex">
             <div class="app-input p-0">
@@ -23,10 +22,16 @@
                 <div class="app-input">
                   <!-- Note input field, remains disabled for notes -->
                   <input
+                    #descriptionInput
                     type="text"
                     placeholder="✍️note"
                     class="border-0"
                     [formControl]="description"
+                    inputmode="text"
+                    enterkeyhint="done"
+                    (keyup.enter)="closeKeypad()"
+                    (focus)="setDescriptionInputFocus(true)"
+                    (blur)="setDescriptionInputFocus(false)"
                   />
                 </div>
               </div>
@@ -49,7 +54,7 @@
           </div>
 
           <!-- Keyboard -->
-          <div class="app-card">
+          <div class="app-card" *ngIf="!isDescriptionInputIsFocus">
             <div class="row">
               <div class="col-9">
                 <div class="row">
@@ -142,4 +147,3 @@
       </div>
     </div>
   </div>
-</ion-content>
