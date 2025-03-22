@@ -26,8 +26,8 @@ export class CalculateKeyboardComponent {
   description = new FormControl('');
   
   // Set today as a local date (yyyy-mm-dd format)
-  today: string = new Date().toLocaleDateString('en-CA');
-  selectedDate: any = new Date().toLocaleDateString('en-CA');  // Keep the selected date as the current local date
+  today: any = new Date();
+  selectedDate: any = new Date().toDateString;  // Keep the selected date as the current local date
 
   @Output() expenseTotalData = new EventEmitter<any>();
 
@@ -79,7 +79,7 @@ export class CalculateKeyboardComponent {
   }
 
   getCurrentDate() {
-    return new Date().toLocaleDateString('en-CA'); // Get today's date in YYYY-MM-DD format
+    return new Date().toDateString; // Get today's date in YYYY-MM-DD format
   }
 
   // on date change

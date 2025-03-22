@@ -8,8 +8,6 @@ import {
   IonSegmentButton,
   IonSegmentContent,
   IonSegmentView,
-  IonReorder,
-  IonReorderGroup,
 } from '@ionic/angular/standalone';
 import { IconService } from 'src/app/services/icon/icon.service';
 
@@ -26,8 +24,6 @@ import { IconService } from 'src/app/services/icon/icon.service';
     IonSegmentButton,
     IonSegmentContent,
     IonSegmentView,
-    IonReorder,
-    IonReorderGroup,
   ],
 })
 export class CategoryIconsComponent implements OnInit {
