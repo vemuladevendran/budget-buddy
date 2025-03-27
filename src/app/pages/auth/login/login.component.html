@@ -21,19 +21,18 @@
           <!-- password -->
           <div class="app-input">
             <input [type]="showPassword ? 'text' : 'password'" name="Password" placeholder="Password" />
-            <ion-icon [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" class="input-icon" (click)="toggelShowPassword()"></ion-icon>
+            <ion-icon [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" class="input-icon"
+              (click)="toggelShowPassword()"></ion-icon>
           </div>
           <!-- login button -->
           <div>
-            <button
-              type="submit"
-              class="btn w-100 app-bg-primary app-text-secondary fw-bold"
-            >
+            <button type="submit" class="btn w-100 app-bg-primary app-text-secondary fw-bold">
               Login
             </button>
           </div>
         </div>
-        <p class="mt-2 px-2">Want to create account <a class="app-text-secondary fw-bold fs-5" routerLink="/signup">Signup</a></p>
+        <p class="mt-2 px-2">Want to create account <a class="app-text-secondary fw-bold fs-5"
+            routerLink="/signup">Signup</a></p>
         <!-- or line -->
         <div class="px-2 position-relative mt-4">
           <hr class="app-text-secondary" />
@@ -42,11 +41,7 @@
 
         <!-- login with google button -->
         <div class="px-2 mb-4">
-          <button
-            type="button"
-            class="btn w-100 app-bg-secondary fw-bold"
-            (click)="googleSign()"
-          >
+          <button type="button" class="btn w-100 app-bg-secondary fw-bold" (click)="googleSign()">
             Get In With Google
           </button>
         </div>

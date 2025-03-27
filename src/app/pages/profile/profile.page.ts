@@ -5,6 +5,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CommonModule } from '@angular/common';
 import { SelectThemeComponent } from '../select-theme/select-theme.component';
+import { environment } from 'src/environments/environment';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -34,10 +36,13 @@ export class ProfilePage implements OnInit {
 
   userSummaryData: any;
 
+  splitWiseAuthCode: string | null = null;
+
   // Inject ModalController using 'inject()'
   private modalCtrl = inject(ModalController);
   private authCtrl = inject(AuthService);
   private tokenCtrl = inject(TokenService);
+  private route = inject(ActivatedRoute);
 
   logout(): void {
     this.authCtrl.logout();
@@ -50,7 +55,7 @@ export class ProfilePage implements OnInit {
     modal.present();
   }
 
-  async openThemesPage(){
+  async openThemesPage() {
     const modal = await this.modalCtrl.create({
       component: SelectThemeComponent,
     });
@@ -76,6 +81,7 @@ export class ProfilePage implements OnInit {
         this.openThemesPage();
         break;
       case 'syncData':
+        this.splitwiseAuthorization();
         break;
       case 'shareApp':
         break;
@@ -97,9 +103,31 @@ export class ProfilePage implements OnInit {
     }
   }
 
- 
+  // authorization splitwise
+
+  async splitwiseAuthorization(): Promise<void> {
+    try {
+      const clientId = environment.splitWiseClientId; // Get your Splitwise client ID from environment variables
+      const redirectUri = 'https://budgetbuddy-27.web.app/home'; // Set your redirect URI here
+      const authUrl = `https://secure.splitwise.com/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}`;
+
+      // Redirect the user to the Splitwise authorization URL
+      window.location.href = authUrl;
+
+    } catch (error) {
+      console.log('Failed to authorize with Splitwise:', error);
+    }
+  }
 
   ngOnInit() {
     this.getUserSummaryData();
+
+    this.route.queryParams.subscribe((params) => {
+      this.splitWiseAuthCode = params['code'];
+
+      if (this.splitWiseAuthCode) {
+        console.log(this.splitWiseAuthCode, '===============');
+      }
+    });
   }
 }

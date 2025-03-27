@@ -6,7 +6,9 @@ export const environment = {
   production: false,
   // API_HOST: 'http://localhost:3000',
   API_HOST: 'https://aplan-my-money-api.onrender.com',
-  API_BASE: '/api/v1'
+  API_BASE: '/api/v1',
+  splitWiseClientId: 'YhQRSqN4DP8cCAu1Vp0UHkVNNDh9ygqJDDtGZ6FM',
+  splitWiseClientSecret: 'yO3QJfVhhaOlc0qhaNEKrMsstYmVGvWHMoY11oZh',
 };
 
 /*
