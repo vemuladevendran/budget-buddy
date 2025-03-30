@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { IonContent, ModalController } from '@ionic/angular/standalone'; // Import ModalController from Ionic
+import { IonContent, ModalController } from '@ionic/angular/standalone';
 import { CategoryIconsComponent } from '../category-icons/category-icons.component';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { TokenService } from 'src/app/services/token/token.service';
@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { SelectThemeComponent } from '../select-theme/select-theme.component';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http'; // Import HttpClient and HttpHeaders
 
 @Component({
   selector: 'app-profile',
@@ -35,14 +36,15 @@ export class ProfilePage implements OnInit {
   ];
 
   userSummaryData: any;
-
   splitWiseAuthCode: string | null = null;
+  userExpenses: any[] = [];
+  splitWiseAccessToken: string | null = null; // Store the access token
 
-  // Inject ModalController using 'inject()'
   private modalCtrl = inject(ModalController);
   private authCtrl = inject(AuthService);
   private tokenCtrl = inject(TokenService);
   private route = inject(ActivatedRoute);
+  private http = inject(HttpClient); // Inject HttpClient
 
   logout(): void {
     this.authCtrl.logout();
@@ -103,19 +105,67 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  // authorization splitwise
-
   async splitwiseAuthorization(): Promise<void> {
     try {
-      const clientId = environment.splitWiseClientId; // Get your Splitwise client ID from environment variables
-      const redirectUri = 'https://budgetbuddy-27.web.app/home'; // Set your redirect URI here
-      const authUrl = `https://secure.splitwise.com/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}`;
-
-      // Redirect the user to the Splitwise authorization URL
+      const clientId = environment.splitWiseClientId;
+      const redirectUri = 'http://localhost:8100/profile/';
+      const authUrl = `/oauth/authorize?client_id=${clientId}&response_type=code&redirect_uri=${redirectUri}`;
       window.location.href = authUrl;
-
     } catch (error) {
       console.log('Failed to authorize with Splitwise:', error);
+    }
+  }
+
+  async getSplitwiseAccessToken(code: string): Promise<void> {
+    const clientId = environment.splitWiseClientId;
+    const clientSecret = environment.splitWiseClientSecret;
+    const redirectUri = 'http://localhost:8100/profile/';
+
+    const body = new URLSearchParams();
+    body.set('client_id', clientId);
+    body.set('client_secret', clientSecret);
+    body.set('code', code);
+    body.set('grant_type', 'authorization_code');
+    body.set('redirect_uri', redirectUri);
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+    });
+
+    try {
+      const response: any = await this.http
+        .post('/oauth/token', body.toString(), {
+          headers: headers,
+        })
+        .toPromise();
+
+      this.splitWiseAccessToken = response.access_token;
+      console.log('Splitwise Access Token:', this.splitWiseAccessToken);
+      await this.fetchSplitwiseExpenses();
+
+    } catch (error) {
+      console.error('Failed to get Splitwise access token:', error);
+    }
+  }
+  async fetchSplitwiseExpenses(): Promise<void> {
+    if (!this.splitWiseAccessToken) {
+      console.error('Access token is missing.');
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.splitWiseAccessToken}`,
+    });
+
+    try {
+      const response: any = await this.http
+        .get('/api/v3.0/get_expenses', { headers: headers })
+        .toPromise();
+
+      this.userExpenses = response.expenses;
+      console.log('Splitwise Expenses:', this.userExpenses);
+    } catch (error) {
+      console.error('Failed to fetch Splitwise expenses:', error);
     }
   }
 
@@ -127,7 +177,11 @@ export class ProfilePage implements OnInit {
 
       if (this.splitWiseAuthCode) {
         console.log(this.splitWiseAuthCode, '===============');
+        this.getSplitwiseAccessToken(this.splitWiseAuthCode);
       }
     });
   }
+
+
+
 }

@@ -5,6 +5,7 @@ import { ShellPage } from './shell.page';
 import { HomePage } from '../home/home.page';
 import { ProfilePage } from '../profile/profile.page';
 import { SearchChatComponent } from '../search-chat/search-chat.component';
+import { ReportsPage } from '../reports/reports.page';
 
 const routes: Routes = [
   {
@@ -12,6 +13,7 @@ const routes: Routes = [
     component: ShellPage,
     children: [
       { path: 'home', component: HomePage },
+      { path: 'reports', component: ReportsPage },
       { path: 'chat', component: SearchChatComponent },
       { path: 'profile', component: ProfilePage },
       { path: '', redirectTo: '/home', pathMatch: 'full' },

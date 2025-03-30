@@ -1,0 +1,8 @@
+{
+  "/splitwise-api": {
+    "target": "https://secure.splitwise.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

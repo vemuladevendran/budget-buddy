@@ -3,5 +3,25 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "server": {
+    "proxies": [
+      {
+        "path": "/oauth/token",
+        "proxyUrl": "https://secure.splitwise.com",
+        "changeOrigin": true,
+        "pathRewrite": {
+          "^/oauth/token": "/oauth/token"
+        }
+      },
+      {
+        "path": "/api/v3.0/get_expenses",
+        "proxyUrl": "https://secure.splitwise.com",
+        "changeOrigin": true,
+        "pathRewrite": {
+          "^/api/v3.0/get_expenses": "/api/v3.0/get_expenses"
+        }
+      }
+    ]
+  }
 }
