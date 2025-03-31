@@ -46,6 +46,7 @@ export class ReportsPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
 
   expenseData: any = [];
+  categoryExpenseData: any = [];
   userSummaryData: any;
   constructor(
     private loaderCtrl: LoaderService,
@@ -116,6 +117,7 @@ export class ReportsPage implements OnInit {
       );
 
       this.expenseData = data;
+      this.categoryExpenseData = categoryData;
       await this.createLineChart(data);
       await this.createDoughnutChart(categoryData);
       this.getUserSummaryData();
@@ -136,14 +138,7 @@ export class ReportsPage implements OnInit {
   }
 
   createLineChart(data: any) {
-    const dailyData = [...data.daily_expenses]; // clone to avoid mutation
-
-    // 🟢 Sort explicitly by date
-    dailyData.sort(
-      (a, b) => new Date(a._id).getTime() - new Date(b._id).getTime()
-    );
-
-    const dates = dailyData.map((item: any) => {
+    const dates = data.daily_expenses.map((item: any) => {
       const date = new Date(item._id);
       return date.toLocaleString('default', {
         month: 'numeric',
@@ -151,7 +146,7 @@ export class ReportsPage implements OnInit {
       });
     });
 
-    const amounts = dailyData.map((item: any) => item.totalExpense);
+    const amounts = data.daily_expenses.map((item: any) => item.totalExpense);
 
     if (this.lineChart) {
       this.lineChart.destroy();
@@ -225,7 +220,7 @@ export class ReportsPage implements OnInit {
             data: values,
 
             borderWidth: 1,
-            hoverBorderColor: 'black'
+            hoverBorderColor: 'black',
           },
         ],
       },

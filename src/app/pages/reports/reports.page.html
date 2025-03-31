@@ -57,7 +57,35 @@
           <!-- category -->
           <div class="col-12 app-card overflow-auto">
             <p>Category Ranking</p>
-            <canvas #pieCanvas class="mt-4"></canvas>
+            <canvas #pieCanvas class="my-4"></canvas>
+            <p>Expense List</p>
+            <div class="row align-items-center">
+              @for (c of categoryExpenseData; track $index) {
+              <div class="col-12 py-1">
+                <div class="row align-items-center">
+                  <div class="col">
+                    <div class="app-icon">
+                      <img
+                        [src]="'/assets/app-icon/' + (c?.transaction_type === 'expense' ? 'expenses-icon/' : 'income-icon/') + c?._id + '.svg'"
+                        [alt]="c?._id" />
+                    </div>
+                  </div>
+                  <div class="col">
+                    <p class="mb-0 text-capitalize fs-5">{{c?._id}}</p>
+                  </div>
+                  <div class="col text-end">
+                    <div>
+                      {{c?.totalAmount | currency: userSummaryData?.default_currency}}
+                    </div>
+                    <div class="fw-bold">
+                      {{ c?.expenses?.length}} Bills
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              }
+            </div>
           </div>
         </div>
 
