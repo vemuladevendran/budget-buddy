@@ -31,4 +31,28 @@ export class ExpenseService {
       })
     );
   }
+
+  // get expense for graph
+  getExpenseForGraph(filters: any) {
+    const url = `${this.settings.API_BASE_URL}/budget/graphdata`;
+    return lastValueFrom(
+      this.http.get(url, {
+        params: {
+          ...filters,
+        },
+      })
+    );
+  }
+
+  // get expense for graph
+  getCategoryExpenseForGraph(filters: any) {
+    const url = `${this.settings.API_BASE_URL}/budget/categorygraphdata`;
+    return lastValueFrom(
+      this.http.get(url, {
+        params: {
+          ...filters,
+        },
+      })
+    );
+  }
 }
