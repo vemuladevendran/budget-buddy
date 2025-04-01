@@ -43,6 +43,11 @@ export class AuthService {
     return lastValueFrom(this.http.post(url, data));
   }
 
+  login(data: any) {
+    const url = `${this.settings.API_BASE_URL}/user/login`;
+    return lastValueFrom(this.http.post(url, data));
+  }
+
   createUser(data: any) {
     const url = `${this.settings.API_BASE_URL}/user/create`;
     return lastValueFrom(this.http.post(url, data));

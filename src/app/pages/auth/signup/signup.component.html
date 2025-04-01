@@ -30,31 +30,22 @@
         </div>
         <!-- password -->
         <div class="app-input">
-          <input
-            [type]="showPassword ? 'text' : 'password'"
-            name="Password"
-            placeholder="Password"
-            formControlName="password"
-          />
-          <ion-icon
-            [name]="showPassword ? 'eye-outline' : 'eye-off-outline'"
-            class="input-icon"
-            (click)="toggelShowPassword()"
-          ></ion-icon>
+          <input [type]="showPassword ? 'text' : 'password'" name="Password" placeholder="Password"
+            formControlName="password" />
+          <ion-icon [name]="showPassword ? 'eye-outline' : 'eye-off-outline'" class="input-icon"
+            (click)="toggelShowPassword()"></ion-icon>
         </div>
         <!-- login button -->
         <div>
-          <button
-            class="btn w-100 app-bg-primary app-text-secondary fw-bold"
-            [disabled]="signupForm.invalid"
-          >
+          <button class="btn w-100 app-bg-primary app-text-secondary fw-bold" [disabled]="signupForm.invalid">
             Sign Up
           </button>
         </div>
       </div>
     </form>
 
-    <p class="mt-2 px-2">Already having account <a class="app-text-secondary fw-bold fs-5" routerLink="/login">Login</a></p>
+    <p class="mt-2 px-2">Already having account <a class="app-text-secondary fw-bold fs-5" routerLink="/login">Login</a>
+    </p>
     <!-- or line -->
     <div class="px-2 position-relative mt-4">
       <hr class="app-text-secondary" />
@@ -63,12 +54,10 @@
 
     <!-- login with google button -->
     <div class="px-2 mb-4">
-      <button
-        type="button"
-        class="btn w-100 app-bg-secondary fw-bold"
-        (click)="googleSign()"
-      >
-        Get In With Google
+      <button type="button" class="btn w-100 app-bg-secondary fw-bold d-flex justify-content-center align-items-center"
+        (click)="googleSign()">
+        <span> Sign Up With Google</span>
+        <ion-icon name="logo-google" class="ms-3"></ion-icon>
       </button>
     </div>
   </div>

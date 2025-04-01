@@ -1,7 +1,7 @@
 .bg-2 {
-    height: 37rem;
+    height: 31rem;
     margin-top: -8rem;
-    margin-left: -5rem;
+    margin-left: -4rem;
     max-width: unset !important;
 }
 
@@ -10,6 +10,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Center it properly */
+    transform: translate(-50%, -50%);
+    /* Center it properly */
     padding: 2px 8px;
 }
