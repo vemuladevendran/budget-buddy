@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ViewChild } from '@angular/core';
+import { inject, OnInit, ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -8,6 +8,7 @@ import {
   IonDatetimeButton,
   IonModal,
 } from '@ionic/angular/standalone';
+import { TokenService } from 'src/app/services/token/token.service';
 
 @Component({
   selector: 'app-calculate-keyboard',
@@ -21,7 +22,7 @@ import {
     IonModal,
   ],
 })
-export class CalculateKeyboardComponent {
+export class CalculateKeyboardComponent implements OnInit {
   noteInput: string = ''; // This holds the note input
   totalAmount: number = 0; // This will be displayed when no operation is done
   currentInput: string = ''; // Holds the current input for calculations
@@ -39,6 +40,9 @@ export class CalculateKeyboardComponent {
   today: any = new Date();
   selectedDate: any = new Date().toDateString; // Keep the selected date as the current local date
 
+  tokenCtrl = inject(TokenService)
+  userSummaryData: any;
+  
   @Output() expenseTotalData = new EventEmitter<any>();
   @ViewChild('descriptionInput') descriptionInput!: ElementRef;
   isDescriptionInputIsFocus: Boolean = false;
@@ -116,4 +120,19 @@ export class CalculateKeyboardComponent {
   closeKeypad() {
     this.descriptionInput.nativeElement.blur();
   }
+
+
+  async getUserSummaryData(): Promise<void> {
+    try {
+      const data = await this.tokenCtrl.getUserSummary();
+      this.userSummaryData = data;
+    } catch (error) {
+      console.log(error, 'Fail to get user data');
+    }
+  }
+
+  ngOnInit(): void {
+      this.getUserSummaryData();
+  }
+
 }
