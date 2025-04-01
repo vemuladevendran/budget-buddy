@@ -91,6 +91,10 @@ export class SearchChatComponent implements OnInit, AfterViewChecked {
     // this.scrollToBottom();
   }
 
+  submitQuery() {
+    this.queryExpenseData();
+  }
+
   ngAfterViewChecked() {
     setTimeout(() => {
       this.scrollToBottom();

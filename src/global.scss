@@ -96,7 +96,19 @@ a {
 }
 
 
-body.dark-theme,  body.dark-theme .app-card {
+body.dark-theme,
+body.dark-theme .app-card {
+    color: var(--ion-color-primary);
+
+    * {
+        color: var(--ion-color-primary);
+    }
+}
+
+body.dark-theme .alert-wrapper {
+    background-color: var(--ion-color-dark);
+    border-radius: 10px;
+    box-shadow: var(--ion-color-medium) 0px 0px 4px;
     color: var(--ion-color-primary);
 
     * {

@@ -1,5 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { IonContent, ModalController } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  ModalController,
+  AlertController,
+} from '@ionic/angular/standalone';
 import { CategoryIconsComponent } from '../category-icons/category-icons.component';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { TokenService } from 'src/app/services/token/token.service';
@@ -41,13 +45,40 @@ export class ProfilePage implements OnInit {
   splitWiseAccessToken: string | null = null; // Store the access token
 
   private modalCtrl = inject(ModalController);
+  private alertCtrl = inject(AlertController);
   private authCtrl = inject(AuthService);
   private tokenCtrl = inject(TokenService);
   private route = inject(ActivatedRoute);
   private http = inject(HttpClient); // Inject HttpClient
 
-  logout(): void {
-    this.authCtrl.logout();
+  async logout(): Promise<void> {
+    try {
+      const alert = await this.alertCtrl.create({
+        header: 'Logout',
+        message: 'Are you sure you want to logout',
+        buttons: [
+          {
+            text: 'No',
+            role: 'cancel',
+            handler: () => {
+              console.log('Alert canceled');
+              return;
+            },
+          },
+          {
+            text: 'Yes',
+            role: 'confirm',
+            handler: () => {
+              this.authCtrl.logout();
+            },
+          },
+        ],
+      });
+
+      await alert.present();
+    } catch (error) {
+      console.log(error, 'fail to logout');
+    }
   }
 
   async openCategoryIconPage() {
@@ -142,7 +173,6 @@ export class ProfilePage implements OnInit {
       this.splitWiseAccessToken = response.access_token;
       console.log('Splitwise Access Token:', this.splitWiseAccessToken);
       await this.fetchSplitwiseExpenses();
-
     } catch (error) {
       console.error('Failed to get Splitwise access token:', error);
     }
@@ -181,7 +211,4 @@ export class ProfilePage implements OnInit {
       }
     });
   }
-
-
-
 }

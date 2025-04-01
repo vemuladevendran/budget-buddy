@@ -6,35 +6,22 @@
 
         <div class="row py-3">
           <div class="col-8 text-center fw-bold fs-3">
-            <span id="year-dialog"
-              >{{monthList[currentMonth].name}} / {{currentYear}}</span
-            >
-            <ion-modal
-              id="example-modal"
-              trigger="year-dialog"
-              (willDismiss)="onWillDismiss($event)"
-            >
+            <span id="year-dialog">{{monthList[currentMonth].name}} / {{currentYear}}</span>
+            <ion-modal id="example-modal" trigger="year-dialog" (willDismiss)="onWillDismiss($event)">
               <ng-template>
                 <div class="wrapper app-bg-dark p-2">
                   <div class="row">
                     <div class="text-center fs-4">
-                      <span class="fs-1 me-3 fw-bold" (click)="changeYear(1)"
-                        >&#8249;</span
-                      >
+                      <span class="fs-1 me-3 fw-bold" (click)="changeYear(1)">&#8249;</span>
                       {{selectedYear}}
-                      <span class="fs-1 ms-3 fw-bold" (click)="changeYear(0)"
-                        >&#8250;</span
-                      >
+                      <span class="fs-1 ms-3 fw-bold" (click)="changeYear(0)">&#8250;</span>
                     </div>
                     <div class="col mt-3 p-3">
                       <div class="row">
                         @for (m of monthList; track $index) {
                         <div class="col-3 p-2">
-                          <div
-                            class="app-card text-center p-1 py-2 btn w-100"
-                            [ngClass]="{'border': (selectedMonth + 1) === m.month }"
-                            (click)="changeMonth(m.month)"
-                          >
+                          <div class="app-card text-center p-1 py-2 btn w-100"
+                            [ngClass]="{'border': (selectedMonth + 1) === m.month }" (click)="changeMonth(m.month)">
                             {{m.month}}
                           </div>
                         </div>
@@ -44,16 +31,10 @@
 
                     <!-- close and submit icons -->
                     <div class="col-12 d-flex justify-content-between">
-                      <ion-icon
-                        name="close-outline"
-                        class="fs-1 fw-bold m-3"
-                        (click)="submitYearMonth(false)"
-                      ></ion-icon>
-                      <ion-icon
-                        name="checkmark-outline"
-                        class="fs-1 fw-bold m-3"
-                        (click)="submitYearMonth(true)"
-                      ></ion-icon>
+                      <ion-icon name="close-outline" class="fs-1 fw-bold m-3"
+                        (click)="submitYearMonth(false)"></ion-icon>
+                      <ion-icon name="checkmark-outline" class="fs-1 fw-bold m-3"
+                        (click)="submitYearMonth(true)"></ion-icon>
                     </div>
                   </div>
                 </div>
@@ -109,10 +90,7 @@
           <h3>Bill On The Month</h3>
           <hr />
           <!-- everyday bills -->
-          <app-expenses-list
-            class="p-0"
-            [expenseList]="expenseList"
-          ></app-expenses-list>
+          <app-expenses-list class="p-0" [expenseList]="expenseList" fromPage="home"></app-expenses-list>
         </div>
       </div>
     </div>

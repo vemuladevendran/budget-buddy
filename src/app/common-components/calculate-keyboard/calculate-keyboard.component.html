@@ -17,7 +17,7 @@
             <div class="col-8">
               <div class="app-input">
                 <!-- Note input field, remains disabled for notes -->
-                <input #descriptionInput type="text" placeholder="✍️note" class="border-0" [formControl]="description"
+                <input #descriptionInput type="text" placeholder="✍️Note e.g: Today Lunch Bill" class="border-0" [formControl]="description"
                   inputmode="text" enterkeyhint="done" (keyup.enter)="closeKeypad()"
                   (focus)="setDescriptionInputFocus(true)" (blur)="setDescriptionInputFocus(false)" />
               </div>

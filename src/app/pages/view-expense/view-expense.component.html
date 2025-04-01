@@ -45,7 +45,7 @@
             <div class="col-7 text-end my-2">{{expenseData?.group_name}}</div>
             <div class="col-5 my-2">Expense Date : </div>
             <div class="col-7 text-end my-2">{{expenseData?.expense_date | date}}</div>
-            <div class="col-12 text-end">
+            <div class="col-12 text-end" *ngIf="fromPage === 'home'">
               <ion-icon name="trash" class="fs-1 app-text-danger mt-4"></ion-icon>
             </div>
           </div>

@@ -2,10 +2,10 @@
   <div class="container">
     <div class="row">
       <div
-        class="col-12 position-sticky start-0 w-100 bg-dark"
+        class="col-12 p-0 position-sticky start-0 w-100"
         style="top: -10%"
       >
-        <div class="app-card" style="font-size: 13px">
+        <div class="app-card app-bg-light" style="font-size: 13px">
           Chat with system to get your expense details
           <hr />
           Use keywords like : Total expense, Highest expenses, this month
@@ -51,12 +51,13 @@
 
       <!-- chat input -->
       <div
-        class="col-12 chat-input-container bg-dark position-fixed start-0 w-100 px-0"
+        class="col-12 chat-input-container position-fixed start-0 w-100 px-0"
       >
         <div class="app-input">
           <input
             type="text"
             name="query"
+            inputmode="text" enterkeyhint="done" (keyup.enter)="submitQuery()"
             placeholder="Get my total expense"
             [formControl]="queryText"
           />

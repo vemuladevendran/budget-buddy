@@ -16,6 +16,7 @@ import {
 })
 export class ViewExpenseComponent implements OnInit {
   expenseData: any;
+  fromPage = '';
 
   modelCtrl = inject(ModalController);
   navParams = inject(NavParams);
@@ -27,6 +28,8 @@ export class ViewExpenseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.expenseData = this.navParams.get('expense');
+    const res = this.navParams.get('expense');
+    this.expenseData = res?.data;
+    this.fromPage = res?.page;
   }
 }

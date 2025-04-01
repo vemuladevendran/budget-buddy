@@ -14,14 +14,17 @@ import { ViewExpenseComponent } from 'src/app/pages/view-expense/view-expense.co
 })
 export class ExpensesListComponent implements OnInit {
   @Input() expenseList: any = [];
-
+  @Input() fromPage: string = '';
   private modalCtrl = inject(ModalController);
 
   async openViewExpense(expense: any) {
     const modal = await this.modalCtrl.create({
       component: ViewExpenseComponent,
       componentProps: {
-        expense: expense, 
+        expense: {
+          data: expense,
+          page: this.fromPage,
+        },
       },
     });
     modal.present();
