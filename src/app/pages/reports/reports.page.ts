@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { IonicModule, IonModal } from '@ionic/angular';
+import { IonicModule, IonModal, ModalController } from '@ionic/angular';
 import { ExpenseService } from 'src/app/services/expense/expense.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { SharedService } from 'src/app/services/shared/shared.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { Chart, registerables } from 'chart.js';
+import { CategoryExpenseListComponent } from './category-expense-list/category-expense-list.component';
 
 Chart.register(...registerables);
 @Component({
@@ -14,6 +15,7 @@ Chart.register(...registerables);
   styleUrls: ['./reports.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule],
+  providers: [ModalController]
 })
 export class ReportsPage implements OnInit {
   @ViewChild('lineCanvas') lineCanvas: ElementRef | any;
@@ -52,7 +54,8 @@ export class ReportsPage implements OnInit {
     private loaderCtrl: LoaderService,
     private expenseCtrl: ExpenseService,
     private sharedCtrl: SharedService,
-    private tokenCtrl: TokenService
+    private tokenCtrl: TokenService,
+    private modalCtrl: ModalController
   ) {
     this.sharedCtrl.addExpenseModalClosed$.subscribe((data) => {
       if (data) {
@@ -236,6 +239,18 @@ export class ReportsPage implements OnInit {
         },
       },
     });
+  }
+
+  // open expense list page
+
+  async openViewExpensesList(expenses: any) {
+    const modal = await this.modalCtrl.create({
+      component: CategoryExpenseListComponent,
+      componentProps: {
+        expenses: expenses,
+      },
+    });
+    modal.present();
   }
 
   ngOnInit() {

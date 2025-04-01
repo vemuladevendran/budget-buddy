@@ -49,19 +49,22 @@
           <div class="col-12 app-card overflow-auto">
             <p>Total spending on the month : {{expenseData?.total_month_expense |
               currency:userSummaryData?.default_currency}}</p>
-            <div>
+            <div [ngClass]="expenseData?.total_month_expense > 0 ? '' : 'd-none'">
               <canvas #lineCanvas></canvas>
+            </div>
+            <div *ngIf="expenseData?.total_month_expense === 0">
+              <div class="text-center app-text-danger">No Data Found</div>
             </div>
           </div>
 
           <!-- category -->
-          <div class="col-12 app-card overflow-auto">
+          <div class="col-12 app-card overflow-auto" [ngClass]="expenseData?.total_month_expense > 0 ? '' : 'd-none'">
             <p>Category Ranking</p>
             <canvas #pieCanvas class="my-4"></canvas>
             <p>Expense List</p>
             <div class="row align-items-center">
               @for (c of categoryExpenseData; track $index) {
-              <div class="col-12 py-1">
+              <div class="col-12 py-1" (click)="openViewExpensesList(c?.expenses)">
                 <div class="row align-items-center">
                   <div class="col">
                     <div class="app-icon">
