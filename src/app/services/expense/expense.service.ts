@@ -32,6 +32,13 @@ export class ExpenseService {
     );
   }
 
+
+  // delete expense
+  deleteExpense(id: string){
+    const url = `${this.settings.API_BASE_URL}/budget/expenses/${id}`;
+    return lastValueFrom(this.http.delete(url));
+  }
+
   // get expense for graph
   getExpenseForGraph(filters: any) {
     const url = `${this.settings.API_BASE_URL}/budget/graphdata`;

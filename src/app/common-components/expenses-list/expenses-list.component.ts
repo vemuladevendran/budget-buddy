@@ -3,6 +3,7 @@ import { Component, inject, Input, OnInit } from '@angular/core';
 import { IonContent } from '@ionic/angular';
 import { ModalController } from '@ionic/angular/standalone';
 import { ViewExpenseComponent } from 'src/app/pages/view-expense/view-expense.component';
+import { SharedService } from 'src/app/services/shared/shared.service';
 
 @Component({
   selector: 'app-expenses-list',
@@ -16,6 +17,7 @@ export class ExpensesListComponent implements OnInit {
   @Input() expenseList: any = [];
   @Input() fromPage: string = '';
   private modalCtrl = inject(ModalController);
+  private sharedCtrl = inject(SharedService);
 
   async openViewExpense(expense: any) {
     const modal = await this.modalCtrl.create({
@@ -28,6 +30,12 @@ export class ExpensesListComponent implements OnInit {
       },
     });
     modal.present();
+
+    const result = await modal.onWillDismiss();
+
+    if (result?.data?.expenseDeleted) {
+      this.sharedCtrl.notifyAddExpenseModalClosed(result?.data);
+    }
   }
 
   constructor() {}

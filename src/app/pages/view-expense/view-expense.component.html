@@ -8,7 +8,7 @@
           <div class="row">
             <div class="col-8 h4">Expense</div>
             <div class="col-4 d-flex justify-content-end">
-              <div class="app-text-icon" (click)="close()">
+              <div class="app-text-icon" (click)="close(false)">
                 <ion-icon name="close-circle-outline"></ion-icon>
                 <span>close</span>
               </div>
@@ -46,7 +46,7 @@
             <div class="col-5 my-2">Expense Date : </div>
             <div class="col-7 text-end my-2">{{expenseData?.expense_date | date}}</div>
             <div class="col-12 text-end" *ngIf="fromPage === 'home'">
-              <ion-icon name="trash" class="fs-1 app-text-danger mt-4"></ion-icon>
+              <ion-icon name="trash" class="fs-1 app-text-danger mt-4" (click)="onDelete(expenseData?.id)"></ion-icon>
             </div>
           </div>
         </div>

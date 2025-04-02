@@ -54,11 +54,11 @@ export class ProfilePage implements OnInit {
   async logout(): Promise<void> {
     try {
       const alert = await this.alertCtrl.create({
-        header: 'Logout',
+        header: 'Logout ⏻',
         message: 'Are you sure you want to logout',
         buttons: [
           {
-            text: 'No',
+            text: 'No ❌',
             role: 'cancel',
             handler: () => {
               console.log('Alert canceled');
@@ -66,7 +66,7 @@ export class ProfilePage implements OnInit {
             },
           },
           {
-            text: 'Yes',
+            text: 'Yes ✔️',
             role: 'confirm',
             handler: () => {
               this.authCtrl.logout();

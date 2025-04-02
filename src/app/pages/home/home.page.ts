@@ -105,7 +105,7 @@ export class HomePage implements OnInit {
       // this.loaderCtrl.showLoading();
       const data = await this.expenseCtrl.getExpense(filters);
       this.expenseList = data;
-      this.getUserSummaryData();
+      await this.getUserSummaryData();
     } catch (error) {
       console.log(error, 'Fail to fetch');
     } finally {
