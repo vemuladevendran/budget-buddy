@@ -13,11 +13,11 @@
       </div>
      
     </div>
-    <div class="col-5">
-      <p class="mb-0 text-capitalize fs-5">{{e?.expense_type}}</p>
+    <div class="col-4">
+      <p class="mb-0 text-capitalize description fw-bold">{{e?.expense_type}}</p>
       <span class="description">{{e?.description}}</span>
     </div>
-    <div class="col-4 text-end">
+    <div class="col-5 text-end">
       <div>
         <span>{{e?.transaction_type === 'expense' ? '-' : '+'}}</span>
         {{e?.amount | currency: e?.currency_code}}
