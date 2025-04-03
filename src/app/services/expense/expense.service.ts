@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, Observable, switchMap } from 'rxjs';
 import { SettingsService } from '../settings/settings.service';
 
 @Injectable({
@@ -15,11 +15,24 @@ export class ExpenseService {
   ) {}
 
   // create user
-  createExpense(data: any) {
+  createExpense(data: any, filters: any) {
     const url = `${this.settings.API_BASE_URL}/budget/expenses`;
-    return lastValueFrom(this.http.post(url, data));
+    return lastValueFrom(
+      this.http.post(url, data).pipe(
+        // After POST, refresh the cache for this month's data
+        // (use bypass header to ensure it fetches from network)
+        switchMap(() =>
+          this.http.get(url, {
+            params: { ...filters },
+            headers: {
+              'ngsw-bypass': 'true'
+            }
+          })
+        )
+      )
+    );
   }
-
+  
   // get expense by year and month
   getExpense(filters: any) {
     const url = `${this.settings.API_BASE_URL}/budget/expenses`;
@@ -33,11 +46,22 @@ export class ExpenseService {
   }
 
 
-  // delete expense
-  deleteExpense(id: string){
-    const url = `${this.settings.API_BASE_URL}/budget/expenses/${id}`;
-    return lastValueFrom(this.http.delete(url));
-  }
+deleteExpense(id: string, filters: any) {
+  const url = `${this.settings.API_BASE_URL}/budget/expenses/${id}`;
+  const refreshUrl = `${this.settings.API_BASE_URL}/budget/expenses`;
+  return lastValueFrom(
+    this.http.delete(url).pipe(
+      switchMap(() =>
+        this.http.get(refreshUrl, {
+          params: { ...filters },
+          headers: {
+            'ngsw-bypass': 'true'
+          }
+        })
+      )
+    )
+  );
+}
 
   // get expense for graph
   getExpenseForGraph(filters: any) {
@@ -63,3 +87,4 @@ export class ExpenseService {
     );
   }
 }
+

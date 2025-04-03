@@ -57,7 +57,11 @@ export class ViewExpenseComponent implements OnInit {
             role: 'confirm',
             handler: async () => {
               this.loaderCtrl.showLoading();
-              await this.expenseCtrl.deleteExpense(id);
+              const currentYearDetails = {
+                month: new Date(this.expenseData?.expense_date).getMonth() + 1,
+                year: new Date(this.expenseData?.expense_date).getFullYear(),
+              };
+              await this.expenseCtrl.deleteExpense(id, currentYearDetails);
               this.toastCtrl.presentToast('Deleted Successfully');
               await this.getUserSummary();
               this.close(true);
@@ -74,16 +78,15 @@ export class ViewExpenseComponent implements OnInit {
     }
   }
 
-   // get user summary
-   async getUserSummary(): Promise<void> {
+  // get user summary
+  async getUserSummary(): Promise<void> {
     try {
       const data = await this.authServe.getUserSummary();
-      this.tokenServe.saveUserSummary(data);
+      await this.tokenServe.saveUserSummary(data);
     } catch (error) {
       console.log(error, 'Fail to get user summary');
     }
   }
-
 
   ngOnInit(): void {
     const res = this.navParams.get('expense');

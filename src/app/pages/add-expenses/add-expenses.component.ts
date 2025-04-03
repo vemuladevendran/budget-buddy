@@ -86,7 +86,11 @@ export class AddExpensesComponent implements OnInit {
         ...e,
       };
       this.loaderCtrl.showLoading();
-      await this.expenseCtrl.createExpense(data);
+      const currentYearDetails = {
+        month: new Date().getMonth() + 1,
+        year: new Date().getFullYear(),
+      };
+      await this.expenseCtrl.createExpense(data, currentYearDetails);
       await this.getUserSummary();
       this.close(true);
     } catch (error) {
@@ -100,7 +104,7 @@ export class AddExpensesComponent implements OnInit {
   async getUserSummary(): Promise<void> {
     try {
       const data = await this.authServe.getUserSummary();
-      this.tokenServe.saveUserSummary(data);
+      await this.tokenServe.saveUserSummary(data);
     } catch (error) {
       console.log(error, 'Fail to get user summary');
     }
