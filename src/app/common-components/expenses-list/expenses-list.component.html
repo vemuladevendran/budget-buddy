@@ -8,10 +8,9 @@
       <div class="app-icon">
         <img
           [src]="'/assets/app-icon/' + (e?.transaction_type === 'expense' ? 'expenses-icon/' : 'income-icon/') + e?.expense_type + '.svg'"
-          [alt]="e?.expense_type"
-        />
+          [alt]="e?.expense_type" decoding="async" loading="lazy" />
       </div>
-     
+
     </div>
     <div class="col-4">
       <p class="mb-0 text-capitalize description fw-bold">{{e?.expense_type}}</p>
@@ -21,10 +20,8 @@
       <div>
         <span>{{e?.transaction_type === 'expense' ? '-' : '+'}}</span>
         {{e?.amount | currency: e?.currency_code}}
-        <span
-          [ngClass]="e?.transaction_type === 'expense' ? 'text-danger' : 'text-success'"
-          >{{e?.transaction_type === 'expense' ? '↑' : '↓'}}</span
-        >
+        <span [ngClass]="e?.transaction_type === 'expense' ? 'text-danger' : 'text-success'">{{e?.transaction_type ===
+          'expense' ? '↑' : '↓'}}</span>
       </div>
       <div class="fw-bold">
         {{ e?.expense_date | date:'hh:mm a' }}

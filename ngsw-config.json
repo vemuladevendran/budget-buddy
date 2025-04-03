@@ -1,6 +1,21 @@
 {
   "$schema": "./node_modules/@angular/service-worker/config/schema.json",
   "index": "/index.html",
+  "dataGroups": [
+    {
+      "name": "api-Expense",
+      "urls": ["https://budgetbuddy-27.web.app/api/v1/budget/expenses"],
+      "cacheQueryOptions": {
+        "ignoreSearch": false
+      },
+      "cacheConfig": {
+        "strategy": "performance",
+        "maxSize": 100,
+        "maxAge": "1h"
+      }
+    }
+  ],
+
   "assetGroups": [
     {
       "name": "Budget Buddy",

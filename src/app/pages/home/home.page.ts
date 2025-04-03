@@ -103,9 +103,9 @@ export class HomePage implements OnInit {
         month: this.selectedMonth + 1,
       };
       // this.loaderCtrl.showLoading();
+      await this.getUserSummaryData();
       const data = await this.expenseCtrl.getExpense(filters);
       this.expenseList = data;
-      await this.getUserSummaryData();
     } catch (error) {
       console.log(error, 'Fail to fetch');
     } finally {
