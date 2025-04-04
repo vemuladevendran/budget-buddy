@@ -141,16 +141,18 @@ export class ReportsPage implements OnInit {
   }
 
   createLineChart(data: any) {
-    const dates = data.daily_expenses.map((item: any) => {
-      const date = new Date(item._id);
+    const dates = data.daily_data.map((item: any) => {
+      const date = new Date(item.date);
       return date.toLocaleString('default', {
         month: 'numeric',
         day: 'numeric',
       });
     });
-
-    const amounts = data.daily_expenses.map((item: any) => item.totalExpense);
-
+  
+    const expenseAmounts = data.daily_data.map((item: any) => item.expense);
+    const incomeAmounts = data.daily_data.map((item: any) => item.income);
+  
+  
     if (this.lineChart) {
       this.lineChart.destroy();
     }
@@ -161,12 +163,20 @@ export class ReportsPage implements OnInit {
         labels: dates,
         datasets: [
           {
-            label: '',
-            data: amounts,
+            label: 'Expense',
+            data: expenseAmounts,
             fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.3,
-            pointBackgroundColor: '#1e88e5',
+            borderColor: '#f44336', // red
+            tension: 0.1,
+            pointBackgroundColor: '#f44336',
+          },
+          {
+            label: 'Income',
+            data: incomeAmounts,
+            fill: false,
+            borderColor: '#4caf50', // green
+            tension: 0.1,
+            pointBackgroundColor: '#4caf50',
           },
         ],
       },
@@ -201,13 +211,20 @@ export class ReportsPage implements OnInit {
         },
         plugins: {
           legend: {
-            display: false,
+            display: true,
+            labels: {
+              color: '#ffffff',
+              font: {
+                size: 8, // text size
+              },
+              usePointStyle: true 
+            },
           },
         },
       },
     });
   }
-
+  
   createDoughnutChart(data: any) {
     const labels = data.map((item: any) => item._id);
     const values = data.map((item: any) => item.totalAmount);

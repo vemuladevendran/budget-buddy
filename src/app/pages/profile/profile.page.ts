@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, model, OnInit } from '@angular/core';
 import {
   IonContent,
   ModalController,
@@ -12,6 +12,7 @@ import { SelectThemeComponent } from '../select-theme/select-theme.component';
 import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; // Import HttpClient and HttpHeaders
+import { CalendarComponent } from '../calendar/calendar.component';
 
 @Component({
   selector: 'app-profile',
@@ -95,6 +96,14 @@ export class ProfilePage implements OnInit {
     modal.present();
   }
 
+
+  async openCalendarpage(){
+    const modal = await this.modalCtrl.create({
+      component: CalendarComponent
+    });
+    modal.present();
+  }
+
   handleIconClick(action: any) {
     switch (action) {
       case 'openCategory':
@@ -103,6 +112,7 @@ export class ProfilePage implements OnInit {
       case 'openBudget':
         break;
       case 'openCalendar':
+        this.openCalendarpage();
         break;
       case 'openLedger':
         break;

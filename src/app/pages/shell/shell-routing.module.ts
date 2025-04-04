@@ -6,6 +6,7 @@ import { HomePage } from '../home/home.page';
 import { ProfilePage } from '../profile/profile.page';
 import { SearchChatComponent } from '../search-chat/search-chat.component';
 import { ReportsPage } from '../reports/reports.page';
+import { CalendarComponent } from '../calendar/calendar.component';
 
 const routes: Routes = [
   {

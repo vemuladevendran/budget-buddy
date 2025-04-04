@@ -15,14 +15,14 @@ export class ExpenseService {
   ) {}
 
   // create user
+
   createExpense(data: any, filters: any) {
     const url = `${this.settings.API_BASE_URL}/budget/expenses`;
+    const refreshUrl = `${url}?t=${Date.now()}`; // cache-buster
     return lastValueFrom(
       this.http.post(url, data).pipe(
-        // After POST, refresh the cache for this month's data
-        // (use bypass header to ensure it fetches from network)
         switchMap(() =>
-          this.http.get(url, {
+          this.http.get(refreshUrl, {
             params: { ...filters },
             headers: {
               'ngsw-bypass': 'true'
@@ -32,6 +32,7 @@ export class ExpenseService {
       )
     );
   }
+  
   
   // get expense by year and month
   getExpense(filters: any) {
@@ -48,7 +49,7 @@ export class ExpenseService {
 
 deleteExpense(id: string, filters: any) {
   const url = `${this.settings.API_BASE_URL}/budget/expenses/${id}`;
-  const refreshUrl = `${this.settings.API_BASE_URL}/budget/expenses`;
+  const refreshUrl = `${this.settings.API_BASE_URL}/budget/expenses?t=${Date.now()}`;
   return lastValueFrom(
     this.http.delete(url).pipe(
       switchMap(() =>
@@ -62,6 +63,7 @@ deleteExpense(id: string, filters: any) {
     )
   );
 }
+
 
   // get expense for graph
   getExpenseForGraph(filters: any) {
