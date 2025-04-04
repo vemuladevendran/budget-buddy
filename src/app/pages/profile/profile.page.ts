@@ -24,19 +24,19 @@ import { CalendarComponent } from '../calendar/calendar.component';
 })
 export class ProfilePage implements OnInit {
   regularlyUsedIcons: any = [
-    { name: 'Category', path: 'category.svg', action: 'openCategory' },
-    { name: 'Budget', path: 'budget.svg', action: 'openBudget' },
     { name: 'Calendar', path: 'calendar.svg', action: 'openCalendar' },
+    { name: 'Category', path: 'category.svg', action: 'openCategory' },
     { name: 'Ledger', path: 'ledger.svg', action: 'openLedger' },
+    { name: 'Budget', path: 'budget.svg', action: 'openBudget' },
     { name: 'Savings', path: 'savings.svg', action: 'openSavings' },
     { name: 'Tag', path: 'tag.svg', action: 'openTag' },
   ];
 
   otherIcons: any = [
     { name: 'Themes', path: 'themes.svg', action: 'openThemes' },
-    { name: 'Sync Data', path: 'sync.svg', action: 'syncData' },
     { name: 'Share App', path: 'share.svg', action: 'shareApp' },
     { name: 'Reminders', path: 'reminder.svg', action: 'openReminders' },
+    { name: 'Sync Data', path: 'sync.svg', action: 'syncData' },
     { name: 'Privacy Policy', path: 'policy.svg', action: 'openPrivacyPolicy' },
   ];
 
