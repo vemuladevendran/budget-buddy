@@ -31,7 +31,7 @@
           <ion-segment-view>
             <ion-segment-content id="expenses">
               <!-- expenses icons -->
-              <div class="row" cdkDropList [cdkDropListData]="categoryIcons"
+              <div class="row gx-1" cdkDropList [cdkDropListData]="categoryIcons"
                 (cdkDropListDropped)="reorderCategoryIcon($event)">
                 @for (c of categoryIcons; track $index) {
                 <div class="col-3" cdkDrag>
