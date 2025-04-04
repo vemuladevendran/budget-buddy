@@ -14,6 +14,7 @@ import { CalendarComponent } from '../calendar/calendar.component';
   styleUrls: ['./home.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, ExpensesListComponent],
+  providers:[ModalController]
 })
 export class HomePage implements OnInit {
   today: string = new Date().toISOString().slice(0, 10);

@@ -216,7 +216,6 @@ export class ProfilePage implements OnInit {
       this.splitWiseAuthCode = params['code'];
 
       if (this.splitWiseAuthCode) {
-        console.log(this.splitWiseAuthCode, '===============');
         this.getSplitwiseAccessToken(this.splitWiseAuthCode);
       }
     });
