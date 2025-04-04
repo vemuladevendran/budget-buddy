@@ -17,9 +17,9 @@
       <span class="description">{{e?.description}}</span>
     </div>
     <div class="col-5 text-end">
-      <div>
+      <div class="d-flex justify-content-end">
         <span>{{e?.transaction_type === 'expense' ? '-' : '+'}}</span>
-        {{e?.amount | currency: e?.currency_code}}
+        <span [title]="e?.amount" class="description"> {{e?.amount | currency: e?.currency_code}}</span>
         <span [ngClass]="e?.transaction_type === 'expense' ? 'text-danger' : 'text-success'">{{e?.transaction_type ===
           'expense' ? '↑' : '↓'}}</span>
       </div>

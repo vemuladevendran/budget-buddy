@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IonicModule, IonModal } from '@ionic/angular';
+import { IonicModule, IonModal, ModalController } from '@ionic/angular';
 import { ExpenseService } from 'src/app/services/expense/expense.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ExpensesListComponent } from '../../common-components/expenses-list/expenses-list.component';
 import { SharedService } from 'src/app/services/shared/shared.service';
 import { TokenService } from 'src/app/services/token/token.service';
+import { CalendarComponent } from '../calendar/calendar.component';
 
 @Component({
   selector: 'app-home',
@@ -44,7 +45,8 @@ export class HomePage implements OnInit {
     private loaderCtrl: LoaderService,
     private expenseCtrl: ExpenseService,
     private sharedCtrl: SharedService,
-    private tokenCtrl: TokenService
+    private tokenCtrl: TokenService,
+    private modalCtrl: ModalController,
   ) {
     this.sharedCtrl.addExpenseModalClosed$.subscribe((data) => {
       if (data) {
@@ -120,6 +122,13 @@ export class HomePage implements OnInit {
     } catch (error) {
       console.log(error, 'Fail to get user data');
     }
+  }
+
+  async openCalendarpage() {
+    const modal = await this.modalCtrl.create({
+      component: CalendarComponent,
+    });
+    modal.present();
   }
 
   ngOnInit() {
