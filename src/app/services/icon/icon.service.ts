@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IconService {
   private categoryIcons: any = [
-    { name: 'beverage', path: 'beverage.svg' },
     { name: 'book', path: 'book.svg' },
     { name: 'pet', path: 'pet.svg' },
     { name: 'food', path: 'food.svg' },
@@ -13,6 +13,7 @@ export class IconService {
     { name: 'healthcare', path: 'healthcare.svg' },
     { name: 'electricity', path: 'electricity.svg' },
     { name: 'gas', path: 'gas.svg' },
+    { name: 'beverage', path: 'beverage.svg' },
     { name: 'water', path: 'water.svg' },
     { name: 'rent', path: 'rent.svg' },
     { name: 'car', path: 'car.svg' },
@@ -41,7 +42,7 @@ export class IconService {
     { name: 'others', path: 'others.svg' },
   ];
 
-  private incomeIcon = [
+  private incomeIcons = [
     { name: 'salary', path: 'salary.svg' },
     { name: 'side-job', path: 'side-job.svg' },
     { name: 'gift', path: 'gift.svg' },
@@ -52,13 +53,45 @@ export class IconService {
     { name: 'others', path: 'others.svg' },
   ];
 
-  constructor() {}
+  private iconsKey = 'ICONS_KEY';
 
-  getCategoryList(): any {
-    return this.categoryIcons;
+  constructor(private storage: Storage) {
+    this.init();
   }
 
-  getIncomeList(): any {
-    return this.incomeIcon;
+  // Initialize the storage
+  async init() {
+    await this.storage.create();
+  }
+
+  async setIconsToStorage(): Promise<void> {
+    const data = await this.storage.get(this.iconsKey);
+    if (!data) {
+      await this.storage.set(this.iconsKey, {
+        categoryIcons: this.categoryIcons,
+        incomeIcons: this.incomeIcons,
+      });
+    }
+  }
+
+  async updateIconsOrder(data: any): Promise<void> {
+    await this.storage.set(this.iconsKey, data);
+  }
+
+  // Reset to default
+  async resetIcons(): Promise<void> {
+    await this.storage.set(this.iconsKey, {
+      categoryIcons: this.categoryIcons,
+      incomeIcons: this.incomeIcons,
+    });
+  }
+
+  async getIconsList() {
+    try {
+      const data = await this.storage.get(this.iconsKey);
+      return data;
+    } catch (error) {
+      console.log('Fail to get Icons');
+    }
   }
 }

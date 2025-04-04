@@ -1,5 +1,6 @@
 import { Component, Renderer2 } from '@angular/core';
 import { ThemeService } from './services/theme/theme.service';
+import { IconService } from './services/icon/icon.service';
 
 @Component({
   selector: 'app-root',
@@ -8,18 +9,25 @@ import { ThemeService } from './services/theme/theme.service';
   standalone: false,
 })
 export class AppComponent {
-  constructor(private renderer: Renderer2, private themeCtrl: ThemeService) {}
+  constructor(private themeCtrl: ThemeService, private iconCtrl: IconService) {}
 
-
-  async applyInitialTheme(): Promise<void>{
+  async applyInitialTheme(): Promise<void> {
     try {
       await this.themeCtrl.setInitialTheme();
     } catch (error) {
-      console.log("Fail to apply themes");
+      console.log('Fail to apply themes');
+    }
+  }
+
+  async storeIconsInLocalStorage(): Promise<void> {
+    try {
+      await this.iconCtrl.setIconsToStorage();
+    } catch (error) {
+      console.log('Fail to store Icons');
     }
   }
 
   ngOnInit() {
-    
+    this.storeIconsInLocalStorage();
   }
 }

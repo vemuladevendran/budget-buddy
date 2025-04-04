@@ -65,9 +65,10 @@ export class AddExpensesComponent implements OnInit {
 
   async getIcons(): Promise<void> {
     try {
-      this.categoryIcons = await this.iconsCtrl.getCategoryList();
+      const data = await this.iconsCtrl.getIconsList();
+      this.categoryIcons = data?.categoryIcons;
       this.selectedCategory = this.categoryIcons[0].name;
-      this.incomeIcons = await this.iconsCtrl.getIncomeList();
+      this.incomeIcons = data?.incomeIcons;
     } catch (error) {
       console.log('Fail to get Icons');
     }
