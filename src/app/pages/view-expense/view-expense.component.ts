@@ -41,8 +41,8 @@ export class ViewExpenseComponent implements OnInit {
   async onDelete(id: string): Promise<void> {
     try {
       const alert = await this.alertCtrl.create({
-        header: 'Delete',
-        message: 'Are you sure you want to Delete 🗑️',
+        header: 'Delete 🗑️',
+        message: 'Are you sure you want to Delete',
         buttons: [
           {
             text: 'No ❌',

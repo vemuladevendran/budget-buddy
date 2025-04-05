@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; // Import HttpClient and HttpHeaders
 import { CalendarComponent } from '../calendar/calendar.component';
+import { LedgergroupsComponent } from '../ledgergroups/ledgergroups.component';
 
 @Component({
   selector: 'app-profile',
@@ -103,6 +104,13 @@ export class ProfilePage implements OnInit {
     modal.present();
   }
 
+  async openGroups() {
+    const modal = await this.modalCtrl.create({
+      component: LedgergroupsComponent,
+    });
+    modal.present();
+  }
+
   handleIconClick(action: any) {
     switch (action) {
       case 'openCategory':
@@ -114,6 +122,7 @@ export class ProfilePage implements OnInit {
         this.openCalendarpage();
         break;
       case 'openGroup':
+        this.openGroups();
         break;
       case 'openSavings':
         break;
