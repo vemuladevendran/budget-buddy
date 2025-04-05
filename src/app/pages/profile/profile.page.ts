@@ -26,7 +26,7 @@ export class ProfilePage implements OnInit {
   regularlyUsedIcons: any = [
     { name: 'Calendar', path: 'calendar.svg', action: 'openCalendar' },
     { name: 'Category', path: 'category.svg', action: 'openCategory' },
-    { name: 'Ledger', path: 'ledger.svg', action: 'openLedger' },
+    { name: 'Groups', path: 'ledger.svg', action: 'openGroup' },
     { name: 'Budget', path: 'budget.svg', action: 'openBudget' },
     { name: 'Savings', path: 'savings.svg', action: 'openSavings' },
     { name: 'Tag', path: 'tag.svg', action: 'openTag' },
@@ -96,10 +96,9 @@ export class ProfilePage implements OnInit {
     modal.present();
   }
 
-
-  async openCalendarpage(){
+  async openCalendarpage() {
     const modal = await this.modalCtrl.create({
-      component: CalendarComponent
+      component: CalendarComponent,
     });
     modal.present();
   }
@@ -114,7 +113,7 @@ export class ProfilePage implements OnInit {
       case 'openCalendar':
         this.openCalendarpage();
         break;
-      case 'openLedger':
+      case 'openGroup':
         break;
       case 'openSavings':
         break;
