@@ -10,7 +10,7 @@ import { TokenService } from 'src/app/services/token/token.service';
 import { CommonModule } from '@angular/common';
 import { SelectThemeComponent } from '../select-theme/select-theme.component';
 import { environment } from 'src/environments/environment';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; // Import HttpClient and HttpHeaders
 import { CalendarComponent } from '../calendar/calendar.component';
 import { LedgergroupsComponent } from '../ledgergroups/ledgergroups.component';
@@ -52,6 +52,7 @@ export class ProfilePage implements OnInit {
   private tokenCtrl = inject(TokenService);
   private route = inject(ActivatedRoute);
   private http = inject(HttpClient); // Inject HttpClient
+  private router = inject(Router);
 
   async logout(): Promise<void> {
     try {
@@ -139,6 +140,7 @@ export class ProfilePage implements OnInit {
       case 'openReminders':
         break;
       case 'openPrivacyPolicy':
+        this.router.navigate(['privacy-policy']);
         break;
       default:
         console.log('Unknown action:', action);

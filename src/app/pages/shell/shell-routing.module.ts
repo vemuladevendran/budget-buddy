@@ -7,6 +7,7 @@ import { ProfilePage } from '../profile/profile.page';
 import { SearchChatComponent } from '../search-chat/search-chat.component';
 import { ReportsPage } from '../reports/reports.page';
 import { CalendarComponent } from '../calendar/calendar.component';
+import { PrivacyPolicyComponent } from '../privacy-policy/privacy-policy.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: 'reports', component: ReportsPage },
       { path: 'chat', component: SearchChatComponent },
       { path: 'profile', component: ProfilePage },
+      { path: 'privacy-policy', component: PrivacyPolicyComponent },
       { path: '', redirectTo: '/home', pathMatch: 'full' },
     ],
   },
