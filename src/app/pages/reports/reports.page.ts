@@ -15,7 +15,7 @@ Chart.register(...registerables);
   styleUrls: ['./reports.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule],
-  providers: [ModalController]
+  providers: [ModalController],
 })
 export class ReportsPage implements OnInit {
   @ViewChild('lineCanvas') lineCanvas: ElementRef | any;
@@ -121,9 +121,9 @@ export class ReportsPage implements OnInit {
 
       this.expenseData = data;
       this.categoryExpenseData = categoryData;
+      await this.getUserSummaryData();
       await this.createLineChart(data);
       await this.createDoughnutChart(categoryData);
-      this.getUserSummaryData();
     } catch (error) {
       console.log(error, 'Fail to fetch');
     } finally {
@@ -148,11 +148,10 @@ export class ReportsPage implements OnInit {
         day: 'numeric',
       });
     });
-  
+
     const expenseAmounts = data.daily_data.map((item: any) => item.expense);
     const incomeAmounts = data.daily_data.map((item: any) => item.income);
-  
-  
+
     if (this.lineChart) {
       this.lineChart.destroy();
     }
@@ -187,7 +186,14 @@ export class ReportsPage implements OnInit {
           y: {
             beginAtZero: true,
             ticks: {
-              callback: (value) => `$${value}`,
+              callback: (value: any) => {
+                return new Intl.NumberFormat('en', {
+                  style: 'currency',
+                  currency: this.userSummaryData?.default_currency,
+                  minimumFractionDigits: 0,
+                  maximumFractionDigits: 0,
+                }).format(value);
+              },
               color: '#4caf50',
             },
           },
@@ -217,14 +223,14 @@ export class ReportsPage implements OnInit {
               font: {
                 size: 8, // text size
               },
-              usePointStyle: true 
+              usePointStyle: true,
             },
           },
         },
       },
     });
   }
-  
+
   createDoughnutChart(data: any) {
     const labels = data.map((item: any) => item._id);
     const values = data.map((item: any) => item.totalAmount);
@@ -250,7 +256,14 @@ export class ReportsPage implements OnInit {
           legend: { display: false },
           tooltip: {
             callbacks: {
-              label: (context) => `${context.label}: $${context.parsed}`,
+              label: (context) => {
+                const value = new Intl.NumberFormat('en', {
+                  style: 'currency',
+                  currency: this.userSummaryData?.default_currency,
+                }).format(context.parsed);
+
+                return `${context.label}: ${value}`;
+              },
             },
           },
         },
