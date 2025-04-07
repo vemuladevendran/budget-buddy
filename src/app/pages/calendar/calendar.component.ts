@@ -14,7 +14,7 @@ import { TokenService } from 'src/app/services/token/token.service';
   imports: [IonModal, IonIcon, IonContent, CommonModule],
 })
 export class CalendarComponent implements OnInit {
-  modelCtrl = inject(ModalController);
+  modalCtrl = inject(ModalController);
   private loaderCtrl = inject(LoaderService);
   private expenseCtrl = inject(ExpenseService);
   private tokenCtrl = inject(TokenService);
@@ -51,7 +51,7 @@ export class CalendarComponent implements OnInit {
   }
 
   close(): any {
-    return this.modelCtrl.dismiss();
+    return this.modalCtrl.dismiss();
   }
 
   changeYear(e: any) {

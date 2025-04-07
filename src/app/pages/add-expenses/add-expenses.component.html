@@ -4,10 +4,22 @@
       <div class="col-12">
         <!-- close icons -->
         <div class="app-card">
-          <div class="row">
+          <div class="d-flex justify-content-between align-items-center">
+            @if (userSummaryData?.ledgerGroups.length > 0) {
+            <div class="app-input fs-5">
+              <select name="group_name" class="w-auto" [formControl]="selectedGroup">
+                <option value="general">General</option>
+                @for (u of userSummaryData?.ledgerGroups; track $index) {
+                <option [value]="u?.groupName">{{u?.groupName}}</option>
+                }
 
-            <div class="col-8 h4">General</div>
-            <div class="col-4 text-end">
+              </select>
+            </div>
+            }
+            @if (userSummaryData?.ledgerGroups.length === 0) {
+            <span class="fs-5 text-capitalize">{{selectedGroup.value}}</span>
+            }
+            <div class="text-end">
               <div class="app-text-icon justify-content-end" (click)="close(false)">
                 <ion-icon name="close-circle-outline"></ion-icon>
                 <span>close</span>

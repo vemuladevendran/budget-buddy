@@ -17,11 +17,11 @@ import { ExpensesListComponent } from "../../../common-components/expenses-list/
 export class CategoryExpenseListComponent implements OnInit {
   expenseList: any[] = [];
 
-  modelCtrl = inject(ModalController);
+  modalCtrl = inject(ModalController);
   navParams = inject(NavParams);
 
   close(): any {
-    return this.modelCtrl.dismiss();
+    return this.modalCtrl.dismiss();
   }
 
   ngOnInit() {

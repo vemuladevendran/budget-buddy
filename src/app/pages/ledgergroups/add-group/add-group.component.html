@@ -1,3 +1,45 @@
-<p>
-  add-group works!
-</p>
+<ion-content>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <!-- close icons -->
+        <div class="app-card">
+          <div class="row align-items-center">
+            <div class="col-8 h4">Create Group</div>
+            <div class="col-4 d-flex justify-content-end">
+              <div class="app-text-icon" (click)="close(false)">
+                <ion-icon name="close-circle-outline"></ion-icon>
+                <span>close</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- add new group -->
+        <div class="mt-2 app-card col-12">
+          <div class="text-center">
+            <img class="group-img" [src]="'/assets/app-icon/groups/' + selectedImage.path" alt="Group Image">
+          </div>
+          <div class="app-input mt-3">
+            <input class="w-100" type="text" name="GroupName" placeholder="Group Name" [formControl]="groupName">
+          </div>
+        </div>
+
+        <div class="col-12 mt-3">
+          <div class="d-flex app-card overflow-auto">
+            @for (g of groupIcons; track $index) {
+            <img [ngClass]="selectedImage.name === g.name ? 'selectedImage' : ''" class="group-img mx-2"
+              [src]="'/assets/app-icon/groups/' + g.path" [alt]="g.name" (click)="selectImage(g)">
+            }
+          </div>
+        </div>
+
+        <div class="my-4">
+          <button type="button" (click)="createGroup()" class="btn w-100 app-bg-secondary">
+            Create Group
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</ion-content>

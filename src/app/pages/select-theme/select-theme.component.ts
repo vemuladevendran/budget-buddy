@@ -17,12 +17,12 @@ import { ThemeService } from 'src/app/services/theme/theme.service';
   imports: [IonContent, IonIcon, IonRadio, IonRadioGroup, IonItem],
 })
 export class SelectThemeComponent implements OnInit {
-  modelCtrl = inject(ModalController);
+  modalCtrl = inject(ModalController);
   themeCtrl = inject(ThemeService);
 
   selectedTheme = 'system';
   close(): any {
-    return this.modelCtrl.dismiss();
+    return this.modalCtrl.dismiss();
   }
   constructor() {}
 

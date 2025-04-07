@@ -32,14 +32,14 @@ import {
   ],
 })
 export class CategoryIconsComponent implements OnInit {
-  modelCtrl = inject(ModalController);
+  modalCtrl = inject(ModalController);
   iconsCtrl = inject(IconService);
 
   categoryIcons: any = [];
   incomeIcons: any = [];
 
   close(): any {
-    return this.modelCtrl.dismiss();
+    return this.modalCtrl.dismiss();
   }
 
   async getIcons(): Promise<void> {

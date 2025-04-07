@@ -16,6 +16,7 @@ import { ExpenseService } from 'src/app/services/expense/expense.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-add-expenses',
@@ -32,10 +33,11 @@ import { AuthService } from 'src/app/services/auth/auth.service';
     IonSegmentView,
     CommonModule,
     CalculateKeyboardComponent,
+    ReactiveFormsModule
   ],
 })
 export class AddExpensesComponent implements OnInit {
-  modelCtrl = inject(ModalController);
+  modalCtrl = inject(ModalController);
   iconsCtrl = inject(IconService);
   expenseCtrl = inject(ExpenseService);
   loaderCtrl = inject(LoaderService);
@@ -49,8 +51,12 @@ export class AddExpensesComponent implements OnInit {
   selectedCategory = '';
   totalAmount = 0;
 
+  userSummaryData:any;
+
+  selectedGroup = new FormControl('general')
+
   close(status: Boolean): any {
-    return this.modelCtrl.dismiss({
+    return this.modalCtrl.dismiss({
       expenseCreated: status,
     });
   }
@@ -69,6 +75,7 @@ export class AddExpensesComponent implements OnInit {
       this.categoryIcons = data?.categoryIcons;
       this.selectedCategory = this.categoryIcons[0].name;
       this.incomeIcons = data?.incomeIcons;
+      this.userSummaryData = await this.tokenServe.getUserSummary();
     } catch (error) {
       console.log('Fail to get Icons');
     }
@@ -84,6 +91,7 @@ export class AddExpensesComponent implements OnInit {
       const data = {
         transaction_type: this.transaction_type,
         expense_type: this.selectedCategory,
+        group_name: this.selectedGroup.value,
         ...e,
       };
       this.loaderCtrl.showLoading();
@@ -100,6 +108,8 @@ export class AddExpensesComponent implements OnInit {
       this.loaderCtrl.hideLoading();
     }
   }
+
+
 
   // get user summary
   async getUserSummary(): Promise<void> {

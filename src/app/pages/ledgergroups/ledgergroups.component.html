@@ -5,7 +5,7 @@
         <!-- close icons -->
         <div class="app-card">
           <div class="row align-items-center">
-            <div class="col-4"><ion-icon class="fs-1" name="add-circle"></ion-icon></div>
+            <div class="col-4"><ion-icon (click)="openAddGroup()" class="fs-1" name="add-circle"></ion-icon></div>
             <div class="col-4 h4">Groups</div>
             <div class="col-4 d-flex justify-content-end">
               <div class="app-text-icon" (click)="close()">
@@ -20,20 +20,30 @@
         <div class="app-card mt-3">
 
           <div class="row align-items-center">
-            <div class="col-4">
-              <div class="app-card text-center p-1">
+            <div class="col-4 my-2">
+              <div class="text-center p-1">
                 <img class="group-img" src="/assets/app-icon/groups/general.svg" alt="General">
               </div>
             </div>
-            <div class="col-8 fs-4 text-end">General</div>
+            <div class="col-8 my-2 fs-4 text-end">General</div>
+
+            @for (u of userSummaryData?.ledgerGroups; track $index) {
+            <div class="col-4 my-2">
+              <div class="text-center p-1">
+                <img class="group-img" [src]="'/assets/app-icon/groups/' + u?.image + '.svg'" [alt]="u?.groupName">
+              </div>
+            </div>
+            <div class="col-8 my-2 fs-5 text-end text-capitalize">{{u?.groupName}}</div>
+            }
+
           </div>
         </div>
 
-          <!-- add group -->
-          <div class="app-card d-flex justify-content-center align-items-center p-2">
-            <ion-icon class="fs-1 me-2" name="add-circle"></ion-icon>
-            <span>Add new Group</span>
-          </div>
+        <!-- add group -->
+        <div class="app-card d-flex justify-content-center align-items-center p-2" (click)="openAddGroup()">
+          <ion-icon class="fs-1 me-2" name="add-circle"></ion-icon>
+          <span>Add new Group</span>
+        </div>
       </div>
     </div>
   </div>

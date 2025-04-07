@@ -78,4 +78,10 @@ export class AuthService {
       })
     );
   }
+
+  // create ledger
+  createLedger(data: any){
+    const url = `${this.settings.API_BASE_URL}/user/create-ledger-group`;
+    return lastValueFrom(this.http.post(url, data));
+  }
 }

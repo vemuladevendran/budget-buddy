@@ -23,7 +23,7 @@ export class ViewExpenseComponent implements OnInit {
   expenseData: any;
   fromPage = '';
 
-  modelCtrl = inject(ModalController);
+  modalCtrl = inject(ModalController);
   navParams = inject(NavParams);
   expenseCtrl = inject(ExpenseService);
   private alertCtrl = inject(AlertController);
@@ -33,7 +33,7 @@ export class ViewExpenseComponent implements OnInit {
   tokenServe = inject(TokenService);
 
   close(status: boolean): any {
-    return this.modelCtrl.dismiss({
+    return this.modalCtrl.dismiss({
       expenseDeleted: status,
     });
   }
