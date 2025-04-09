@@ -25,15 +25,14 @@ export class ExpenseService {
           this.http.get(refreshUrl, {
             params: { ...filters },
             headers: {
-              'ngsw-bypass': 'true'
-            }
+              'ngsw-bypass': 'true',
+            },
           })
         )
       )
     );
   }
-  
-  
+
   // get expense by year and month
   getExpense(filters: any) {
     const url = `${this.settings.API_BASE_URL}/budget/expenses`;
@@ -46,24 +45,24 @@ export class ExpenseService {
     );
   }
 
-
-deleteExpense(id: string, filters: any) {
-  const url = `${this.settings.API_BASE_URL}/budget/expenses/${id}`;
-  const refreshUrl = `${this.settings.API_BASE_URL}/budget/expenses?t=${Date.now()}`;
-  return lastValueFrom(
-    this.http.delete(url).pipe(
-      switchMap(() =>
-        this.http.get(refreshUrl, {
-          params: { ...filters },
-          headers: {
-            'ngsw-bypass': 'true'
-          }
-        })
+  deleteExpense(id: string, filters: any) {
+    const url = `${this.settings.API_BASE_URL}/budget/expenses/${id}`;
+    const refreshUrl = `${
+      this.settings.API_BASE_URL
+    }/budget/expenses?t=${Date.now()}`;
+    return lastValueFrom(
+      this.http.delete(url).pipe(
+        switchMap(() =>
+          this.http.get(refreshUrl, {
+            params: { ...filters },
+            headers: {
+              'ngsw-bypass': 'true',
+            },
+          })
+        )
       )
-    )
-  );
-}
-
+    );
+  }
 
   // get expense for graph
   getExpenseForGraph(filters: any) {
@@ -88,5 +87,16 @@ deleteExpense(id: string, filters: any) {
       })
     );
   }
-}
 
+  getExpenseFile(dateRange: any) {
+    const url = `${this.settings.API_BASE_URL}/files/expense-excel`;
+    return lastValueFrom(
+      this.http.get(url, {
+        params: {
+          ...dateRange,
+        },
+        responseType: 'blob',
+      })
+    );
+  }
+}

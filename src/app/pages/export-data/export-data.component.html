@@ -2,7 +2,6 @@
   <div class="container">
     <div class="row">
       <div class="col-12">
-        <!-- Header -->
         <div class="app-card">
           <div class="row align-items-center">
             <div class="col-8 h4">Export Data</div>
@@ -15,10 +14,8 @@
           </div>
         </div>
 
-        <!-- Date Pickers -->
         <div class="mt-2 app-card">
           <div class="row">
-            <!-- From Date -->
             <div class="col-6 text-center">
               <p>Select From Date:</p>
               <ion-datetime-button datetime="fromPicker"></ion-datetime-button>
@@ -30,7 +27,6 @@
               </ion-modal>
             </div>
 
-            <!-- To Date -->
             <div class="col-6 text-center">
               <p>Select To Date:</p>
               <ion-datetime-button datetime="toPicker"></ion-datetime-button>
@@ -45,10 +41,16 @@
           </div>
         </div>
 
-        <!-- Submit Button -->
-        <div class="mt-3 text-center">
+        <div class="mt-3 text-center" *ngIf="!showDownloadButton">
           <button type="button" (click)="submitDates()" class="btn w-100 app-bg-secondary">
-            Generate CSV
+            Generate Excel
+          </button>
+        </div>
+
+        <div class="mt-3 text-center" *ngIf="showDownloadButton">
+          <button type="button" (click)="downloadFile()" class="btn w-100 app-bg-success app-text-light">
+            <ion-icon name="download-outline" slot="start" class="app-text-light"></ion-icon>
+            Download Excel
           </button>
         </div>
       </div>
