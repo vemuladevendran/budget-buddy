@@ -1,0 +1,57 @@
+<ion-content>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <!-- Header -->
+        <div class="app-card">
+          <div class="row align-items-center">
+            <div class="col-8 h4">Export Data</div>
+            <div class="col-4 d-flex justify-content-end">
+              <div class="app-text-icon" (click)="close()">
+                <ion-icon name="close-circle-outline"></ion-icon>
+                <span>Close</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Date Pickers -->
+        <div class="mt-2 app-card">
+          <div class="row">
+            <!-- From Date -->
+            <div class="col-6 text-center">
+              <p>Select From Date:</p>
+              <ion-datetime-button datetime="fromPicker"></ion-datetime-button>
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime id="fromPicker" presentation="date" [(ngModel)]="fromDate" [max]="toDate"
+                    (ionChange)="onFromDateChange($event)"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </div>
+
+            <!-- To Date -->
+            <div class="col-6 text-center">
+              <p>Select To Date:</p>
+              <ion-datetime-button datetime="toPicker"></ion-datetime-button>
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime id="toPicker" presentation="date" [(ngModel)]="toDate" [min]="fromDate"
+                    (ionChange)="onToDateChange($event)"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mt-3 text-center">
+          <button type="button" (click)="submitDates()" class="btn w-100 app-bg-secondary">
+            Generate CSV
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

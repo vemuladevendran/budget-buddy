@@ -87,7 +87,7 @@ export class SearchChatComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.getChatDetails();
+    // this.getChatDetails();
     // this.scrollToBottom();
   }
 

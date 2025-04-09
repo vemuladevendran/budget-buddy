@@ -14,6 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http'; // Import HttpClient and HttpHeaders
 import { CalendarComponent } from '../calendar/calendar.component';
 import { LedgergroupsComponent } from '../ledgergroups/ledgergroups.component';
+import { ExportDataComponent } from '../export-data/export-data.component';
 
 @Component({
   selector: 'app-profile',
@@ -35,9 +36,10 @@ export class ProfilePage implements OnInit {
 
   otherIcons: any = [
     { name: 'Themes', path: 'themes.svg', action: 'openThemes' },
+    { name: 'Export Data', path: 'export.svg', action: 'openExport' },
     { name: 'Share App', path: 'share.svg', action: 'shareApp' },
     { name: 'Reminders', path: 'reminder.svg', action: 'openReminders' },
-    { name: 'Sync Data', path: 'sync.svg', action: 'syncData' },
+    { name: 'Save Local', path: 'sync.svg', action: 'syncData' },
     { name: 'Privacy Policy', path: 'policy.svg', action: 'openPrivacyPolicy' },
   ];
 
@@ -112,6 +114,13 @@ export class ProfilePage implements OnInit {
     modal.present();
   }
 
+  async openExportData() {
+    const modal = await this.modalCtrl.create({
+      component: ExportDataComponent,
+    });
+    modal.present();
+  }
+
   handleIconClick(action: any) {
     switch (action) {
       case 'openCategory':
@@ -131,6 +140,9 @@ export class ProfilePage implements OnInit {
         break;
       case 'openThemes':
         this.openThemesPage();
+        break;
+      case 'openExport':
+        this.openExportData();
         break;
       case 'syncData':
         this.splitwiseAuthorization();
