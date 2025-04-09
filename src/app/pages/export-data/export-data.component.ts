@@ -6,13 +6,16 @@ import {
   IonDatetime,
   IonDatetimeButton,
   IonModal,
-  IonButton,
 } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 import { ExpenseService } from 'src/app/services/expense/expense.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
-import { CommonModule } from '@angular/common';
+
+import { Capacitor } from '@capacitor/core';
+import { Filesystem, Directory } from '@capacitor/filesystem';
 
 @Component({
   selector: 'app-export-data',
@@ -26,8 +29,7 @@ import { CommonModule } from '@angular/common';
     IonDatetimeButton,
     IonModal,
     FormsModule,
-    IonButton, // Import IonButton for the download button
-    CommonModule
+    CommonModule,
   ],
 })
 export class ExportDataComponent implements OnInit {
@@ -38,8 +40,8 @@ export class ExportDataComponent implements OnInit {
 
   fromDate: string = '';
   toDate: string = '';
-  csvData: Blob | null = null; // Store the received CSV data
-  showDownloadButton: boolean = false; // Control the visibility of the download button
+  csvData: Blob | null = null;
+  showDownloadButton: boolean = false;
 
   ngOnInit() {
     const today = new Date();
@@ -74,11 +76,14 @@ export class ExportDataComponent implements OnInit {
         from: this.fromDate,
         to: this.toDate,
       };
+
       this.loaderCtrl.showLoading('Generating Excel');
-      const data: Blob = await this.expenseCtrl.getExpenseFile(dateRange); // Await the Promise resolution
+      const data: Blob = await this.expenseCtrl.getExpenseFile(dateRange);
       this.loaderCtrl.hideLoading();
+
       this.csvData = data;
       this.showDownloadButton = true;
+
       this.toastCtrl.presentToast('Excel generated successfully. Click Download to save.');
     } catch (error) {
       console.error(error);
@@ -89,9 +94,34 @@ export class ExportDataComponent implements OnInit {
     }
   }
 
-  downloadFile(): void {
-    if (this.csvData) {
-      const filename = `expenses_${this.fromDate}_to_${this.toDate}.xlsx`;
+  async downloadFile(): Promise<void> {
+    if (!this.csvData) {
+      this.toastCtrl.presentToast('No data to download.');
+      return;
+    }
+
+    const filename = `expenses_${this.fromDate}_to_${this.toDate}.xlsx`;
+
+    if (Capacitor.isNativePlatform()) {
+      // Save using Capacitor Filesystem
+      try {
+        const buffer = await this.csvData.arrayBuffer();
+        const base64Data = this.arrayBufferToBase64(buffer);
+
+        await Filesystem.writeFile({
+          path: filename,
+          data: base64Data,
+          directory: Directory.Documents,
+        });
+
+        this.toastCtrl.presentToast('✅ Excel file saved to Documents folder.');
+        this.close();
+      } catch (err) {
+        console.error('File save error:', err);
+        this.toastCtrl.presentToast('❌ Failed to save Excel file.');
+      }
+    } else {
+      // Download in Web
       const url = window.URL.createObjectURL(this.csvData);
       const a = document.createElement('a');
       document.body.appendChild(a);
@@ -100,10 +130,19 @@ export class ExportDataComponent implements OnInit {
       a.click();
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
-      this.csvData = null; // Reset the data after download
-      this.showDownloadButton = false; // Hide the download button
-    } else {
-      this.toastCtrl.presentToast('No data to download.');
+
+      this.toastCtrl.presentToast('✅ Excel file downloaded.');
+      this.close();
     }
+
+    this.csvData = null;
+    this.showDownloadButton = false;
+  }
+
+  private arrayBufferToBase64(buffer: ArrayBuffer): string {
+    let binary = '';
+    const bytes = new Uint8Array(buffer);
+    bytes.forEach((b) => (binary += String.fromCharCode(b)));
+    return window.btoa(binary);
   }
 }
