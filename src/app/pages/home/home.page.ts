@@ -14,7 +14,7 @@ import { CalendarComponent } from '../calendar/calendar.component';
   styleUrls: ['./home.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, ExpensesListComponent],
-  providers:[ModalController]
+  providers: [ModalController],
 })
 export class HomePage implements OnInit {
   today: string = new Date().toISOString().slice(0, 10);
@@ -47,7 +47,7 @@ export class HomePage implements OnInit {
     private expenseCtrl: ExpenseService,
     private sharedCtrl: SharedService,
     private tokenCtrl: TokenService,
-    private modalCtrl: ModalController,
+    private modalCtrl: ModalController
   ) {
     this.sharedCtrl.addExpenseModalClosed$.subscribe((data) => {
       if (data) {
@@ -101,6 +101,9 @@ export class HomePage implements OnInit {
 
   async getExpenseList(): Promise<void> {
     try {
+      this.expenseList = await this.expenseCtrl.getLocalStorageFirst();
+      console.log(this.expenseList, '====== Local storage');
+
       const filters = {
         year: this.selectedYear,
         month: this.selectedMonth + 1,
@@ -109,6 +112,7 @@ export class HomePage implements OnInit {
       await this.getUserSummaryData();
       const data = await this.expenseCtrl.getExpense(filters);
       this.expenseList = data;
+      console.log(this.expenseList, '====== api storage');
     } catch (error) {
       console.log(error, 'Fail to fetch');
     } finally {

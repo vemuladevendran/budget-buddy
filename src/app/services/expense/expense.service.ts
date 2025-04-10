@@ -3,16 +3,27 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { lastValueFrom, Observable, switchMap } from 'rxjs';
 import { SettingsService } from '../settings/settings.service';
+import { Storage } from '@ionic/storage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExpenseService {
+  private expensekey = 'EXPENSE_KEY';
+
   constructor(
     private http: HttpClient,
     private settings: SettingsService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private storage: Storage
+  ) {
+    this.init();
+  }
+
+  // Initialize the storage
+  async init() {
+    await this.storage.create();
+  }
 
   // create user
 
@@ -34,15 +45,17 @@ export class ExpenseService {
   }
 
   // get expense by year and month
-  getExpense(filters: any) {
+  async getExpense(filters: any) {
     const url = `${this.settings.API_BASE_URL}/budget/expenses`;
-    return lastValueFrom(
+    const data = lastValueFrom(
       this.http.get(url, {
         params: {
           ...filters,
         },
       })
     );
+    await this.storeLocalFirst(data);
+    return data;
   }
 
   deleteExpense(id: string, filters: any) {
@@ -98,5 +111,24 @@ export class ExpenseService {
         responseType: 'blob',
       })
     );
+  }
+
+  // storing data in local storage for quick response
+  async storeLocalFirst(data: any) {
+    try {
+      await this.storage.set(this.expensekey, data);
+    } catch (error) {
+      console.log('fail to save data');
+    }
+  }
+
+  async getLocalStorageFirst() {
+    try {
+      const data = await this.storage.get(this.expensekey);
+      const result = data ? data : [];
+      return result;
+    } catch (error) {
+      console.log('Fail to load');
+    }
   }
 }
