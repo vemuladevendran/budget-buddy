@@ -113,7 +113,7 @@ export class ReportsPage implements OnInit {
         year: this.selectedYear,
         month: this.selectedMonth + 1,
       };
-      // this.loaderCtrl.showLoading();
+      this.loaderCtrl.showLoading();
       const data = await this.expenseCtrl.getExpenseForGraph(filters);
       const categoryData = await this.expenseCtrl.getCategoryExpenseForGraph(
         filters

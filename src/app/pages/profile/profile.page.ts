@@ -15,6 +15,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http'; // Import HttpCl
 import { CalendarComponent } from '../calendar/calendar.component';
 import { LedgergroupsComponent } from '../ledgergroups/ledgergroups.component';
 import { ExportDataComponent } from '../export-data/export-data.component';
+import { AvaliableSoonComponent } from '../avaliable-soon/avaliable-soon.component';
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
   selector: 'app-profile',
@@ -55,6 +57,7 @@ export class ProfilePage implements OnInit {
   private route = inject(ActivatedRoute);
   private http = inject(HttpClient); // Inject HttpClient
   private router = inject(Router);
+  private toastCtrl = inject(ToastService)
 
   async logout(): Promise<void> {
     try {
@@ -121,12 +124,21 @@ export class ProfilePage implements OnInit {
     modal.present();
   }
 
+  async openAvaliableSoon() {
+    await this.toastCtrl.presentToast("Avaliable Soon")
+    // const modal = await this.modalCtrl.create({
+    //   component: AvaliableSoonComponent,
+    // });
+    // modal.present();
+  }
+
   handleIconClick(action: any) {
     switch (action) {
       case 'openCategory':
         this.openCategoryIconPage();
         break;
       case 'openBudget':
+        this.openAvaliableSoon();
         break;
       case 'openCalendar':
         this.openCalendarpage();
@@ -135,8 +147,10 @@ export class ProfilePage implements OnInit {
         this.openGroups();
         break;
       case 'openSavings':
+        this.openAvaliableSoon();
         break;
       case 'openTag':
+        this.openAvaliableSoon();
         break;
       case 'openThemes':
         this.openThemesPage();
@@ -145,11 +159,12 @@ export class ProfilePage implements OnInit {
         this.openExportData();
         break;
       case 'syncData':
-        this.splitwiseAuthorization();
+        this.openAvaliableSoon();
         break;
       case 'shareApp':
         break;
       case 'openReminders':
+        this.openAvaliableSoon();
         break;
       case 'openPrivacyPolicy':
         this.router.navigate(['privacy-policy']);
