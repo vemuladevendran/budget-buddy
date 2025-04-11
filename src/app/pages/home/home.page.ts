@@ -102,7 +102,7 @@ export class HomePage implements OnInit {
   async getExpenseList(): Promise<void> {
     try {
       this.expenseList = await this.expenseCtrl.getLocalStorageFirst();
-      console.log(this.expenseList, '====== Local storage');
+      // console.log(this.expenseList, '====== Local storage');
 
       const filters = {
         year: this.selectedYear,
@@ -112,7 +112,7 @@ export class HomePage implements OnInit {
       await this.getUserSummaryData();
       const data = await this.expenseCtrl.getExpense(filters);
       this.expenseList = data;
-      console.log(this.expenseList, '====== api storage');
+      // console.log(this.expenseList, '====== api storage');
     } catch (error) {
       console.log(error, 'Fail to fetch');
     } finally {
