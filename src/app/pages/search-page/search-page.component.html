@@ -1,8 +1,66 @@
 <ion-content>
   <div class="container">
-    <div class="row">
-      <div class="col-12">
-        
+    <div>
+      <div class="row">
+        <div class="col-12">
+          <p class="mt-2 fs-4 fw-bold">Search Expense</p>
+
+          <!-- search bar and filters -->
+          <div class="row align-items-center">
+            <div class="col-10">
+              <div class="app-input py-0">
+                <ion-icon name="search-outline" class="input-icon"></ion-icon>
+                <input [formControl]="searchQuery" type="text" name="query" #searchInput inputmode="text"
+                  enterkeyhint="done" (keyup.enter)="search()" placeholder="Search Expense" />
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="text-center" id="filter-button" (click)="toggelFilters()">
+                <small class="m-0">Filter</small>
+                <ion-icon name="filter-outline"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- filters according -->
+        @if (showFilters) {
+        <div class="col-12">
+          <ion-accordion-group id="accordion" #accordionGroup>
+            <ion-accordion value="categories">
+              <ion-item slot="header" color="light">
+                <ion-label>Categories</ion-label>
+              </ion-item>
+              <div slot="content" class="row p-1 app-card">
+                @for (c of categoryList; track $index) {
+                <div class="col-4 text-capitalize py-1" (click)="selectCategory(c?.name)"
+                  [ngClass]="{'selectedCategory': selectedCategory.includes(c?.name)}">
+                  {{c?.name}}
+                </div>
+                }
+              </div>
+            </ion-accordion>
+            <ion-accordion value="groups">
+              <ion-item slot="header" color="light">
+                <ion-label>Groups</ion-label>
+              </ion-item>
+              <div slot="content" class="row app-card">
+                @for (g of userSummary?.ledgerGroups; track $index) {
+                <div class="col text-capitalize p-1 text-nowrap text-center" (click)="selectGroup(g?.groupName)"
+                  [ngClass]="{'selectedCategory': selectedGroup.includes(g?.groupName)}">
+                  {{g?.groupName}}
+                </div>
+                }
+              </div>
+            </ion-accordion>
+          </ion-accordion-group>
+        </div>
+        }
+        <!-- search button -->
+        <div class="mt-2">
+          <button type="submit" class="btn w-100 app-bg-secondary" (click)="search()">
+            Search
+          </button>
+        </div>
       </div>
     </div>
   </div>

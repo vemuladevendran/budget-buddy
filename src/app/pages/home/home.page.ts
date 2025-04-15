@@ -7,13 +7,14 @@ import { ExpensesListComponent } from '../../common-components/expenses-list/exp
 import { SharedService } from 'src/app/services/shared/shared.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { CalendarComponent } from '../calendar/calendar.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, ExpensesListComponent],
+  imports: [IonicModule, CommonModule, ExpensesListComponent, RouterModule],
   providers: [ModalController],
 })
 export class HomePage implements OnInit {
