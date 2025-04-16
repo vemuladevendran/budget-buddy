@@ -10,12 +10,12 @@ export class ChatService {
   constructor(private http: HttpClient, private settings: SettingsService) {}
 
   getChat() {
-    const url = `${this.settings.API_BASE_URL}/budget/chat`;
+    const url = `${this.settings.API_BASE_URL}/budget/chat-data`;
     return lastValueFrom(this.http.get(url));
   }
 
   querySystem(data: any) {
-    const url = `${this.settings.API_BASE_URL}/budget/search`;
+    const url = `${this.settings.API_BASE_URL}/budget/chat`;
     return lastValueFrom(
       this.http.get(url, {
         params: {

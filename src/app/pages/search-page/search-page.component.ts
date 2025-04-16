@@ -18,6 +18,7 @@ import { CommonModule } from '@angular/common';
 import { IconService } from 'src/app/services/icon/icon.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
+import { ExpenseService } from 'src/app/services/expense/expense.service';
 
 @Component({
   selector: 'app-search-page',
@@ -43,12 +44,13 @@ export class SearchPageComponent implements OnInit {
   searchQuery = new FormControl();
   selectedGroup:any = [];
   selectedCategory:any = [];
-  searchResults: any[] = [];
+  searchResults: any = [];
 
 
   private categoryCrtl = inject(IconService);
   private tokenCtrl = inject(TokenService);
   private loaderCtrl = inject(LoaderService)
+  private expenseCtrl = inject(ExpenseService)
 
   toggelFilters() {
     this.showFilters = !this.showFilters;
@@ -95,12 +97,15 @@ export class SearchPageComponent implements OnInit {
 
   async search(): Promise<void>{
     try {
-      const data = {
+      const filtersData = {
         searchText : this.searchQuery.value,
         expense_type: this.selectedCategory,
         group_name: this.selectedGroup,
       }
-      console.log(data)
+      await this.loaderCtrl.showLoading();
+      this.searchResults = await this.expenseCtrl.searchExpense(filtersData);
+      console.log(this.searchResults, 'search results');
+      
     } catch (error) {
       console.log(error);
       await this.loaderCtrl.hideLoading()

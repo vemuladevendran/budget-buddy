@@ -58,6 +58,20 @@ export class ExpenseService {
     return data;
   }
 
+
+    // search expense by filters
+    async searchExpense(filters: any) {
+      const url = `${this.settings.API_BASE_URL}/budget/search-expense`;
+      const data = lastValueFrom(
+        this.http.get(url, {
+          params: {
+            ...filters,
+          },
+        })
+      );
+      return data;
+    }
+
   deleteExpense(id: string, filters: any) {
     const url = `${this.settings.API_BASE_URL}/budget/expenses/${id}`;
     const refreshUrl = `${
