@@ -44,8 +44,12 @@
                 <ion-label>Groups</ion-label>
               </ion-item>
               <div slot="content" class="row app-card">
+                <div class="col text-capitalize mx-1 p-1 text-nowrap text-center" (click)="selectGroup('general')"
+                  [ngClass]="{'selectedCategory': selectedGroup.includes('general')}">
+                  general
+                </div>
                 @for (g of userSummary?.ledgerGroups; track $index) {
-                <div class="col text-capitalize p-1 text-nowrap text-center" (click)="selectGroup(g?.groupName)"
+                <div class="col text-capitalize p-1 mx-1 text-nowrap text-center" (click)="selectGroup(g?.groupName)"
                   [ngClass]="{'selectedCategory': selectedGroup.includes(g?.groupName)}">
                   {{g?.groupName}}
                 </div>
@@ -60,6 +64,15 @@
           <button type="submit" class="btn w-100 app-bg-secondary" (click)="search()">
             Search
           </button>
+        </div>
+
+
+        <!-- expense list -->
+        <div class="col-12">
+          <!-- list -->
+          <div>
+            <app-expenses-list class="p-0" [expenseList]="searchResults"></app-expenses-list>
+          </div>
         </div>
       </div>
     </div>

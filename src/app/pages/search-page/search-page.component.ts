@@ -19,6 +19,8 @@ import { IconService } from 'src/app/services/icon/icon.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ExpenseService } from 'src/app/services/expense/expense.service';
+import { ToastService } from 'src/app/services/toast/toast.service';
+import { ExpensesListComponent } from "../../common-components/expenses-list/expenses-list.component";
 
 @Component({
   selector: 'app-search-page',
@@ -35,22 +37,23 @@ import { ExpenseService } from 'src/app/services/expense/expense.service';
     IonAccordionGroup,
     IonLabel,
     ReactiveFormsModule,
-  ],
+    ExpensesListComponent
+],
 })
 export class SearchPageComponent implements OnInit {
   showFilters = false;
   categoryList: any[] = [];
   userSummary: any;
-  searchQuery = new FormControl();
-  selectedGroup:any = [];
-  selectedCategory:any = [];
+  searchQuery = new FormControl('');
+  selectedGroup: any = [];
+  selectedCategory: any = [];
   searchResults: any = [];
-
 
   private categoryCrtl = inject(IconService);
   private tokenCtrl = inject(TokenService);
-  private loaderCtrl = inject(LoaderService)
-  private expenseCtrl = inject(ExpenseService)
+  private loaderCtrl = inject(LoaderService);
+  private expenseCtrl = inject(ExpenseService);
+  private toastCtrl = inject(ToastService);
 
   toggelFilters() {
     this.showFilters = !this.showFilters;
@@ -74,7 +77,6 @@ export class SearchPageComponent implements OnInit {
     }
   }
 
-
   selectCategory(category: string) {
     const index = this.selectedCategory.indexOf(category);
     if (index > -1) {
@@ -93,27 +95,35 @@ export class SearchPageComponent implements OnInit {
     }
   }
 
-
-
-  async search(): Promise<void>{
+  async search(): Promise<void> {
     try {
       const filtersData = {
-        searchText : this.searchQuery.value,
+        searchText: this.searchQuery.value,
         expense_type: this.selectedCategory,
         group_name: this.selectedGroup,
+      };
+
+      if (
+        !filtersData.searchText &&
+        filtersData.expense_type.length === 0 &&
+        filtersData.group_name.length === 0
+      ) {
+        console.log('atleast one stould have value in filters data');
+        await this.toastCtrl.presentToast('Select atleast one filter');
+        return;
       }
+
+      console.log(filtersData);
       await this.loaderCtrl.showLoading();
       this.searchResults = await this.expenseCtrl.searchExpense(filtersData);
-      console.log(this.searchResults, 'search results');
-      
+      // console.log(this.searchResults, 'search results');
     } catch (error) {
       console.log(error);
-      await this.loaderCtrl.hideLoading()
-    }finally{
-      await this.loaderCtrl.hideLoading()
+      await this.loaderCtrl.hideLoading();
+    } finally {
+      await this.loaderCtrl.hideLoading();
     }
   }
-
 
   ngOnInit() {
     this.getCategoryList();
