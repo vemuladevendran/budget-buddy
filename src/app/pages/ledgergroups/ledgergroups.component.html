@@ -22,7 +22,7 @@
           <div class="row align-items-center">
             <div class="col-4 my-2">
               <div class="text-center p-1">
-                <img class="group-img" src="/assets/app-icon/groups/general.svg" alt="General">
+                <img class="group-img" src="/assets/app-icon/groups/general.jpg" alt="General">
               </div>
             </div>
             <div class="col-8 my-2 fs-4 text-end">General</div>
@@ -30,7 +30,7 @@
             @for (u of userSummaryData?.ledgerGroups; track $index) {
             <div class="col-4 my-2">
               <div class="text-center p-1">
-                <img class="group-img" [src]="'/assets/app-icon/groups/' + u?.image + '.svg'" [alt]="u?.groupName">
+                <img class="group-img" [src]="'/assets/app-icon/groups/' + u?.image + '.jpg'" [alt]="u?.groupName">
               </div>
             </div>
             <div class="col-8 my-2 fs-5 text-end text-capitalize">{{u?.groupName}}</div>

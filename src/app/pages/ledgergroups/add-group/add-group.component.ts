@@ -19,15 +19,14 @@ import { TokenService } from 'src/app/services/token/token.service';
   imports: [IonContent, IonIcon, CommonModule, ReactiveFormsModule],
 })
 export class AddGroupComponent implements OnInit {
-  selectedImage = { name: 'general', path: 'general.svg' };
+  selectedImage = { name: 'general', path: 'general.jpg' };
   groupIcons = [
-    { name: 'general', path: 'general.svg' },
-    { name: 'airplane', path: 'airplane.svg' },
-    { name: 'avatar', path: 'avatar.svg' },
-    { name: 'camera', path: 'camera.svg' },
-    { name: 'document', path: 'document.svg' },
-    { name: 'electric', path: 'electric.svg' },
-    { name: 'graph', path: 'graph.svg' },
+    { name: 'general', path: 'general.jpg' },
+    { name: 'avatar', path: 'avatar.jpg' },
+    { name: 'camera', path: 'camera.jpg' },
+    { name: 'document', path: 'document.jpg' },
+    { name: 'food', path: 'food.jpg' },
+    { name: 'trip', path: 'trip.jpg' },
   ];
 
   groupName = new FormControl('');
