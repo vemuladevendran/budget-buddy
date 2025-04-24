@@ -33,7 +33,7 @@ export class CalculateKeyboardComponent implements OnInit {
   numbers: (number | string)[] = [1, 2, 3, 4, 5, 6, 7, 8, 9, '.', 0]; // Array of numbers and decimal point for the keypad.
   operators: string[] = ['+', '-', 'X', '÷']; // Array of operators for the keypad.
   dateopen = false; // Flag to control the display of the date picker modal.
-  paymentType = new FormControl('Card');
+  paymentType = new FormControl('Online');
   description = new FormControl('');
   today: any = new Date().toISOString();
   selectedDate: any = new Date().toISOString; // Stores the selected date (initially today's date).

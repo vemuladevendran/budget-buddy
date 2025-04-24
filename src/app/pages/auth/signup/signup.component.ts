@@ -37,7 +37,7 @@ export class SignupComponent {
       name: ['', [Validators.required]],
       email: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(5)]],
-      default_currency: ['', [Validators.required]],
+      default_currency: ['USD', [Validators.required]],
       authorization: ['app'],
     });
   }
