@@ -18,8 +18,8 @@
             <div class="col-8">
               <div class="app-input app-bg-light">
                 <!-- Note input field, remains disabled for notes -->
-                <input #descriptionInput type="text" placeholder="✍️Note e.g: Today Lunch Bill" class="border-0" [formControl]="description"
-                  inputmode="text" enterkeyhint="done" (keyup.enter)="closeKeypad()"
+                <input #descriptionInput type="text" placeholder="✍️Note e.g: Today Lunch Bill" class="border-0"
+                  [formControl]="description" inputmode="text" enterkeyhint="done" (keyup.enter)="closeKeypad()"
                   (focus)="setDescriptionInputFocus(true)" (blur)="setDescriptionInputFocus(false)" />
               </div>
             </div>
@@ -69,8 +69,8 @@
 
                     <ion-modal [keepContentsMounted]="true" [isOpen]="dateopen">
                       <ng-template>
-                        <ion-datetime max="{{ today }}" (ionChange)="onDateChange($event)" [showDefaultButtons]="true"
-                          presentation="date" [formatOptions]="{
+                        <ion-datetime [value]="selectedDate" max="{{ today }}" (ionChange)="onDateChange($event)"
+                          [showDefaultButtons]="true" presentation="date" [formatOptions]="{
                           date: {
                             month: '2-digit',
                             day: '2-digit',

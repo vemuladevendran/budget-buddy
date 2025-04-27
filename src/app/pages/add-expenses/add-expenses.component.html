@@ -72,7 +72,7 @@
         </div>
         <!-- input and keypad card -->
         <div class="cla-container">
-          <app-calculate-keyboard (expenseTotalData)="handleSubmit($event)"></app-calculate-keyboard>
+          <app-calculate-keyboard [expenseData]="calculatorData" [isUpdate]="isUpdate" (expenseTotalData)="handleSubmit($event)"></app-calculate-keyboard>
         </div>
       </div>
     </div>

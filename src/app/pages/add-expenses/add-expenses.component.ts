@@ -58,8 +58,12 @@ export class AddExpensesComponent implements OnInit {
   expenseData: any;
   fromPage: any;
   calculatorData: any;
-
+  isUpdate = false;
   selectedGroup = new FormControl('general');
+
+  constructor() {
+    this.getUpdateExpenseData();
+  }
 
   close(status: Boolean): any {
     return this.modalCtrl.dismiss({
@@ -82,7 +86,6 @@ export class AddExpensesComponent implements OnInit {
       this.selectedCategory = this.categoryIcons[0].name;
       this.incomeIcons = data?.incomeIcons;
       this.userSummaryData = await this.tokenServe.getUserSummary();
-      this.getUpdateExpenseData();
     } catch (error) {
       console.log('Fail to get Icons');
     }
@@ -134,6 +137,7 @@ export class AddExpensesComponent implements OnInit {
     if (this.fromPage !== 'update') return;
     console.log(this.expenseData);
     // set data
+    this.isUpdate = true;
     this.transaction_type = this.expenseData?.transaction_type;
     this.selectedCategory = this.expenseData?.expense_type;
     this.selectedGroup.setValue(this.expenseData?.group_name);
@@ -143,7 +147,7 @@ export class AddExpensesComponent implements OnInit {
       amount: this.expenseData?.amount,
       expense_date: this.expenseData?.expense_date,
     };
-  };
+  }
 
   ngOnInit(): void {
     this.getIcons();

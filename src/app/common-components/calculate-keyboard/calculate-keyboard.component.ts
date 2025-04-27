@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { inject, OnInit, ViewChild } from '@angular/core';
+import { inject, Input, OnInit, ViewChild } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +24,9 @@ import { TokenService } from 'src/app/services/token/token.service';
   ],
 })
 export class CalculateKeyboardComponent implements OnInit {
+  @Input() expenseData: any;
+  @Input() isUpdate = false;
+
   noteInput: string = '';
   totalAmount: number = 0; // Stores the final calculated amount.
   currentInput: string = ''; // Stores the current input string for calculations.
@@ -35,7 +38,7 @@ export class CalculateKeyboardComponent implements OnInit {
   dateopen = false; // Flag to control the display of the date picker modal.
   paymentType = new FormControl('Online');
   description = new FormControl('');
-  today: any = new Date().toISOString();
+  today: any = new Date().toISOString;
   selectedDate: any = new Date().toISOString; // Stores the selected date (initially today's date).
   tokenCtrl = inject(TokenService); // Injects the TokenService for user data.
   userSummaryData: any; // Stores user summary data from TokenService.
@@ -135,7 +138,20 @@ export class CalculateKeyboardComponent implements OnInit {
     }
   }
 
+  setEditData() {
+    if (this.isUpdate) {
+      
+      console.log(this.expenseData, '======check====', this.isUpdate);
+
+      this.description.setValue(this.expenseData?.description);
+      this.paymentType.setValue(this.expenseData?.payment_type);
+      this.selectedDate = this.expenseData?.expense_date;
+      this.totalAmount = this.expenseData?.amount;
+    }
+  }
+
   ngOnInit(): void {
     this.getUserSummaryData(); // Fetch user summary data on component initialization.
+    this.setEditData();
   }
 }
