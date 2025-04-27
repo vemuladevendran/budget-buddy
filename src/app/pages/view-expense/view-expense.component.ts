@@ -11,6 +11,7 @@ import { ExpenseService } from 'src/app/services/expense/expense.service';
 import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { TokenService } from 'src/app/services/token/token.service';
+import { AddExpensesComponent } from '../add-expenses/add-expenses.component';
 
 @Component({
   selector: 'app-view-expense',
@@ -75,6 +76,31 @@ export class ViewExpenseComponent implements OnInit {
       this.toastCtrl.presentToast('Fail to delete');
     } finally {
       this.loaderCtrl.hideLoading();
+    }
+  }
+
+  // open update expense page
+  async openUpdateExpense(expenseData: any): Promise<void> {
+    try {
+      const modal = await this.modalCtrl.create({
+        component: AddExpensesComponent,
+        componentProps: {
+          expense: {
+            data: expenseData,
+            page: 'update',
+          },
+        },
+      });
+
+      modal.present();
+
+      const result = await modal.onWillDismiss();
+      if (result.data) {
+        this.close(true);
+      }
+    } catch (error) {
+      console.log(error);
+      this.toastCtrl.presentToast('Fail to open edit');
     }
   }
 

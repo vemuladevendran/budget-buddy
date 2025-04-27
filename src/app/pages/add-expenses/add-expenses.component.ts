@@ -17,6 +17,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { NavParams } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-expenses',
@@ -33,7 +34,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     IonSegmentView,
     CommonModule,
     CalculateKeyboardComponent,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
 })
 export class AddExpensesComponent implements OnInit {
@@ -43,6 +44,7 @@ export class AddExpensesComponent implements OnInit {
   loaderCtrl = inject(LoaderService);
   tokenServe = inject(TokenService);
   authServe = inject(AuthService);
+  navParams = inject(NavParams);
 
   categoryIcons: any = [];
   incomeIcons: any = [];
@@ -51,9 +53,13 @@ export class AddExpensesComponent implements OnInit {
   selectedCategory = '';
   totalAmount = 0;
 
-  userSummaryData:any;
+  // update data details
+  userSummaryData: any;
+  expenseData: any;
+  fromPage: any;
+  calculatorData: any;
 
-  selectedGroup = new FormControl('general')
+  selectedGroup = new FormControl('general');
 
   close(status: Boolean): any {
     return this.modalCtrl.dismiss({
@@ -76,6 +82,7 @@ export class AddExpensesComponent implements OnInit {
       this.selectedCategory = this.categoryIcons[0].name;
       this.incomeIcons = data?.incomeIcons;
       this.userSummaryData = await this.tokenServe.getUserSummary();
+      this.getUpdateExpenseData();
     } catch (error) {
       console.log('Fail to get Icons');
     }
@@ -109,8 +116,6 @@ export class AddExpensesComponent implements OnInit {
     }
   }
 
-
-
   // get user summary
   async getUserSummary(): Promise<void> {
     try {
@@ -120,6 +125,25 @@ export class AddExpensesComponent implements OnInit {
       console.log(error, 'Fail to get user summary');
     }
   }
+
+  // update expense
+  async getUpdateExpenseData() {
+    const res = this.navParams.get('expense');
+    this.expenseData = res?.data;
+    this.fromPage = res?.page;
+    if (this.fromPage !== 'update') return;
+    console.log(this.expenseData);
+    // set data
+    this.transaction_type = this.expenseData?.transaction_type;
+    this.selectedCategory = this.expenseData?.expense_type;
+    this.selectedGroup.setValue(this.expenseData?.group_name);
+    this.calculatorData = {
+      payment_type: this.expenseData?.payment_type,
+      description: this.expenseData?.description,
+      amount: this.expenseData?.amount,
+      expense_date: this.expenseData?.expense_date,
+    };
+  };
 
   ngOnInit(): void {
     this.getIcons();
