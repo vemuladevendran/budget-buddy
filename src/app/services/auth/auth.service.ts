@@ -13,7 +13,6 @@ import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 })
 export class AuthService {
 
-  userDetails: any;
 
   constructor(
     private http: HttpClient,
@@ -32,8 +31,10 @@ export class AuthService {
   }
 
   async googleSignIn() {
-    this.userDetails = await GoogleAuth.signIn();
-    return await this.userDetails;
+    const userDetails = await GoogleAuth.signIn();
+    console.log(userDetails, '====-=-=-=');
+    
+    return userDetails;
   }
 
   // create user

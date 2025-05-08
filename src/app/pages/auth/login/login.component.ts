@@ -50,6 +50,8 @@ export class LoginComponent {
     try {
       this.userDetails = await this.authServe.googleSignIn();
 
+      console.log(this.userDetails, '===========');
+      
       const info = await Device.getInfo();
       const deviceId = await Device.getId();
 

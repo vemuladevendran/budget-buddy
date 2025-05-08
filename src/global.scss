@@ -44,6 +44,8 @@ a {
     text-decoration: none !important;
 }
 
+
+
 .app-input {
     padding: 0.1rem 0;
     margin: .3rem .1rem;
@@ -56,6 +58,7 @@ a {
     transition:
         border 0.3s ease-in-out,
         background-color 0.3s;
+
     >input,
     select {
         width: 100%;
@@ -65,18 +68,20 @@ a {
         height: 3rem;
         padding: 0 0.6rem;
         outline: none;
-       
+
     }
 
     &:focus-within {
         border: 1.5px solid var(--ion-color-success);
         background-color: var(--ion-color-success-low);
+
         >input {
             color: var(--ion-color-success);
         }
     }
 
-    &.disabled, &:disabled{
+    &.disabled,
+    &:disabled {
         border: 1px solid var(--ion-color-medium) !important;
         background-color: var(--ion-color-medium-low) !important;
         color: #888;
