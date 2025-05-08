@@ -83,7 +83,7 @@ export class AddExpensesComponent implements OnInit {
     try {
       const data = await this.iconsCtrl.getIconsList();
       this.categoryIcons = data?.categoryIcons;
-      this.selectedCategory = this.categoryIcons[0].name;
+      if (!this.isUpdate) this.selectedCategory = this.categoryIcons[0].name;
       this.incomeIcons = data?.incomeIcons;
       this.userSummaryData = await this.tokenServe.getUserSummary();
     } catch (error) {
@@ -109,6 +109,12 @@ export class AddExpensesComponent implements OnInit {
         month: new Date().getMonth() + 1,
         year: new Date().getFullYear(),
       };
+      if (this.isUpdate) {
+        await this.expenseCtrl.updateExpense(this.expenseData?.id, data);
+        await this.getUserSummary();
+        this.close(true);
+        return;
+      }
       await this.expenseCtrl.createExpense(data, currentYearDetails);
       await this.getUserSummary();
       this.close(true);

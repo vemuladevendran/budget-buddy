@@ -12,6 +12,7 @@ import { LoaderService } from 'src/app/services/loader/loader.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { TokenService } from 'src/app/services/token/token.service';
 import { AddExpensesComponent } from '../add-expenses/add-expenses.component';
+import { SharedService } from 'src/app/services/shared/shared.service';
 
 @Component({
   selector: 'app-view-expense',
@@ -32,6 +33,7 @@ export class ViewExpenseComponent implements OnInit {
   private toastCtrl = inject(ToastService);
   authServe = inject(AuthService);
   tokenServe = inject(TokenService);
+  private sharedCtrl = inject(SharedService);
 
   close(status: boolean): any {
     return this.modalCtrl.dismiss({
@@ -95,8 +97,11 @@ export class ViewExpenseComponent implements OnInit {
       modal.present();
 
       const result = await modal.onWillDismiss();
-      if (result.data) {
-        this.close(true);
+
+      if (result?.data?.expenseCreated) {
+        this.sharedCtrl.notifyAddExpenseModalClosed(result?.data);
+        this.toastCtrl.presentToast('Updated Successfully');
+        this.close(result?.data?.expenseCreated || false);
       }
     } catch (error) {
       console.log(error);

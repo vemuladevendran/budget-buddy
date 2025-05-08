@@ -84,7 +84,9 @@ export class ExportDataComponent implements OnInit {
       this.csvData = data;
       this.showDownloadButton = true;
 
-      this.toastCtrl.presentToast('Excel generated successfully. Click Download to save.');
+      this.toastCtrl.presentToast(
+        'Excel generated successfully. Click Download to save.'
+      );
     } catch (error) {
       console.error(error);
       this.loaderCtrl.hideLoading();
@@ -144,5 +146,14 @@ export class ExportDataComponent implements OnInit {
     const bytes = new Uint8Array(buffer);
     bytes.forEach((b) => (binary += String.fromCharCode(b)));
     return window.btoa(binary);
+  }
+
+  async predict(): Promise<void> {
+    try {
+      const data = await this.expenseCtrl.predictExpense();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

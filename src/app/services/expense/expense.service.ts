@@ -91,6 +91,12 @@ export class ExpenseService {
     );
   }
 
+  // update expense
+  updateExpense(id: string, data: any){
+    const url = `${this.settings.API_BASE_URL}/budget/expenses/${id}`;
+    return lastValueFrom(this.http.put(url, data));
+  }
+
   // get expense for graph
   getExpenseForGraph(filters: any) {
     const url = `${this.settings.API_BASE_URL}/budget/graphdata`;
@@ -145,4 +151,12 @@ export class ExpenseService {
       console.log('Fail to load');
     }
   }
-}
+
+
+  // predict expense
+  predictExpense() {
+    const url = `${this.settings.API_BASE_URL}/budget/predict`;
+    return lastValueFrom(
+      this.http.get(url)
+    );
+  }}
