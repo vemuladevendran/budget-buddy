@@ -57,12 +57,12 @@ export class AddExpensesComponent implements OnInit {
   userSummaryData: any;
   expenseData: any;
   fromPage: any;
-  calculatorData: any;
+  // calculatorData: any;
   isUpdate = false;
   selectedGroup = new FormControl('general');
 
   constructor() {
-    this.getUpdateExpenseData();
+    // this.getUpdateExpenseData();
   }
 
   close(status: Boolean): any {
@@ -109,12 +109,12 @@ export class AddExpensesComponent implements OnInit {
         month: new Date().getMonth() + 1,
         year: new Date().getFullYear(),
       };
-      if (this.isUpdate) {
-        await this.expenseCtrl.updateExpense(this.expenseData?.id, data);
-        await this.getUserSummary();
-        this.close(true);
-        return;
-      }
+      // if (this.isUpdate) {
+      //   await this.expenseCtrl.updateExpense(this.expenseData?.id, data);
+      //   await this.getUserSummary();
+      //   this.close(true);
+      //   return;
+      // }
       await this.expenseCtrl.createExpense(data, currentYearDetails);
       await this.getUserSummary();
       this.close(true);
@@ -136,24 +136,24 @@ export class AddExpensesComponent implements OnInit {
   }
 
   // update expense
-  async getUpdateExpenseData() {
-    const res = this.navParams.get('expense');
-    this.expenseData = res?.data;
-    this.fromPage = res?.page;
-    if (this.fromPage !== 'update') return;
-    console.log(this.expenseData);
-    // set data
-    this.isUpdate = true;
-    this.transaction_type = this.expenseData?.transaction_type;
-    this.selectedCategory = this.expenseData?.expense_type;
-    this.selectedGroup.setValue(this.expenseData?.group_name);
-    this.calculatorData = {
-      payment_type: this.expenseData?.payment_type,
-      description: this.expenseData?.description,
-      amount: this.expenseData?.amount,
-      expense_date: this.expenseData?.expense_date,
-    };
-  }
+  // async getUpdateExpenseData() {
+  //   const res = this.navParams.get('expense');
+  //   this.expenseData = res?.data;
+  //   this.fromPage = res?.page;
+  //   if (this.fromPage !== 'update') return;
+  //   console.log(this.expenseData);
+  //   // set data
+  //   this.isUpdate = true;
+  //   this.transaction_type = this.expenseData?.transaction_type;
+  //   this.selectedCategory = this.expenseData?.expense_type;
+  //   this.selectedGroup.setValue(this.expenseData?.group_name);
+  //   this.calculatorData = {
+  //     payment_type: this.expenseData?.payment_type,
+  //     description: this.expenseData?.description,
+  //     amount: this.expenseData?.amount,
+  //     expense_date: this.expenseData?.expense_date,
+  //   };
+  // }
 
   ngOnInit(): void {
     this.getIcons();
