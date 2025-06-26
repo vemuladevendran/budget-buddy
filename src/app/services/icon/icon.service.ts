@@ -39,6 +39,9 @@ export class IconService {
     { name: 'social', path: 'social.svg' },
     { name: 'bath', path: 'bath.svg' },
     { name: 'music', path: 'music.svg' },
+    { name: 'groceries', path: 'groceries.svg' },
+    { name: 'payment', path: 'payment.svg' },
+    { name: 'splitwise', path: 'splitwise.svg' },
     { name: 'others', path: 'others.svg' },
   ];
 
@@ -50,6 +53,8 @@ export class IconService {
     { name: 'investment', path: 'investment.svg' },
     { name: 'friend', path: 'friend.svg' },
     { name: 'bonus', path: 'bonus.svg' },
+    { name: 'payment', path: 'payment.svg' },
+    { name: 'splitwise', path: 'splitwise.svg' },
     { name: 'others', path: 'others.svg' },
   ];
 
